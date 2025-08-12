@@ -11,6 +11,8 @@ function App() {
     {name: 'Elisabeth', age: 16}
   ];
 
+  const numbers = [1, 2, 3, 4];
+
   // Find the first teenager
   const firstTeenager = people.find(p => p.age >= 10 && p.age <= 20);
 
@@ -23,6 +25,11 @@ function App() {
   // Check if any person is a teenager
   const isAnyTeenager = people.some(p => p.age >= 10 && p.age <= 20);
 
+  // Reduce function to calculate the sum of numbers
+  const sumOfNumbers = numbers.reduce((acc, curr) => acc + curr, 0);
+
+  // Reduce function to calculate the product of numbers
+  const productOfNumbers = numbers.reduce((acc, curr) => acc * curr, 1);
   return (
     <div className="App" style={{ padding: "40px" }}>
       <h2>Teenager Queries</h2>
@@ -37,6 +44,13 @@ function App() {
       </div>
       <div>
         <strong>Is any person a teenager?</strong> {isAnyTeenager ? 'True' : 'False'}
+      </div>
+      <h2>Number Queries</h2>
+      <div>
+        <strong>Sum of numbers:</strong> {sumOfNumbers}
+      </div>
+      <div>
+        <strong>Product of numbers:</strong> {productOfNumbers}
       </div>
     </div>
   );
