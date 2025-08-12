@@ -9,18 +9,11 @@ function multiSort(list, sortOrder) {
     const firstNameCompare = sortOrder === 'asc'
       ? a.firstName.localeCompare(b.firstName)
       : b.firstName.localeCompare(a.firstName);
+    if (firstNameCompare !== 0) return firstNameCompare;
     if (b.isActive - a.isActive !== 0) return b.isActive - a.isActive;
     if (a.age - b.age !== 0) return a.age - b.age;
-    if (firstNameCompare !== 0) return firstNameCompare;
     return a.lastName.localeCompare(b.lastName);
   });
-}
-
-function getStatistics(persons) {
-  const total = persons.length;
-  const avgAge = total ? (persons.reduce((sum, p) => sum + p.age, 0) / total).toFixed(1) : 0;
-  const activeCount = persons.filter(p => p.isActive).length;
-  return { total, avgAge, activeCount };
 }
 
 function getSkillRanking(persons) {
@@ -28,8 +21,14 @@ function getSkillRanking(persons) {
     p.skills.forEach(skill => acc[skill] = (acc[skill] || 0) + 1);
     return acc;
   }, {});
-  const arr = Object.entries(freq).sort((a, b) => b[1] - a[1]);
-  return arr;
+  return Object.entries(freq).sort((a, b) => b[1] - a[1]);
+}
+
+function getStatistics(persons) {
+  const total = persons.length;
+  const avgAge = total ? (persons.reduce((sum, p) => sum + p.age, 0) / total).toFixed(1) : 0;
+  const activeCount = persons.filter(p => p.isActive).length;
+  return { total, avgAge, activeCount };
 }
 
 function App() {
@@ -52,8 +51,8 @@ function App() {
     );
   }, [sortOrder, minAge, maxAge, skill, search]);
 
-  const statistics = useMemo(() => getStatistics(processedPersons), [processedPersons]);
   const skillRanking = useMemo(() => getSkillRanking(processedPersons), [processedPersons]);
+  const statistics = useMemo(() => getStatistics(processedPersons), [processedPersons]);
 
   return (
     <div style={{ padding: 20 }}>
