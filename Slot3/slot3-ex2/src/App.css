@@ -36,3 +36,136 @@
     transform: rotate(360deg);
   }
 }
+
+.container {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #f7f9fa;
+  min-height: 100vh;
+  padding: 32px;
+}
+.main-title {
+  color: #1976d2;
+  margin-bottom: 24px;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 600;
+}
+.controls {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.input {
+  padding: 6px 10px;
+  border-radius: 4px;
+  border: 1px solid #bdbdbd;
+  background: #fff;
+  font-size: 1rem;
+}
+.sort-btn {
+  background: linear-gradient(90deg, #1976d2 60%, #64b5f6 100%);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 18px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.sort-btn:hover {
+  background: linear-gradient(90deg, #1565c0 60%, #42a5f5 100%);
+}
+.tables-row {
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+  justify-content: center;
+}
+.table-wrapper {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  padding: 18px 20px;
+  min-width: 340px;
+  flex: 1;
+}
+.person-table, .skill-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 12px;
+}
+.person-table th, .person-table td,
+.skill-table th, .skill-table td {
+  border: 1px solid #e0e0e0;
+  padding: 8px 10px;
+  text-align: left;
+}
+.person-table th {
+  background: #1976d2;
+  color: #fff;
+  font-weight: 600;
+}
+.skill-table th {
+  background: #009688;
+  color: #fff;
+  font-weight: 600;
+}
+.person-table tr:nth-child(even) {
+  background: #f1f8e9;
+}
+.person-table tr:hover {
+  background: #e3f2fd;
+}
+.skill-table tr:nth-child(even) {
+  background: #e0f2f1;
+}
+.skill-table tr:hover {
+  background: #b2dfdb;
+}
+.top-skill-row td {
+  font-weight: bold;
+  color: #d32f2f;
+  background: #fff3e0;
+}
+.skill-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.95em;
+  margin-bottom: 2px;
+}
+.active-badge {
+  background: #c8e6c9;
+  color: #388e3c;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-weight: 500;
+}
+.inactive-badge {
+  background: #ffcdd2;
+  color: #d32f2f;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-weight: 500;
+}
+.statistics-box {
+  background: #e3f2fd;
+  border-radius: 6px;
+  padding: 12px 16px;
+  font-size: 1.05em;
+  margin-top: 8px;
+  box-shadow: 0 1px 4px rgba(25, 118, 210, 0.08);
+}
+.stat-value {
+  color: #1976d2;
+  font-weight: bold;
+}
+.skill-title {
+  color: #009688;
+  margin-bottom: 10px;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 500;
+}

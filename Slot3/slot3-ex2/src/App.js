@@ -55,41 +55,44 @@ function App() {
   const statistics = useMemo(() => getStatistics(processedPersons), [processedPersons]);
 
   return (
-    <div style={{ padding: 20 }}>
-      <h2>Person Table & Skill Ranking</h2>
-      <div style={{ marginBottom: 12 }}>
-        <button onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}>
+    <div className="container">
+      <h2 className="main-title">Person Management System</h2>
+      <div className="controls">
+        <button
+          className="sort-btn"
+          onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
+        >
           Sort First Name: {sortOrder === 'asc' ? 'A→Z' : 'Z→A'}
         </button>
         <input
+          className="input"
           type="number"
           placeholder="Min age"
           value={minAge}
           onChange={e => setMinAge(e.target.value)}
-          style={{ marginLeft: 8, marginRight: 8 }}
         />
         <input
+          className="input"
           type="number"
           placeholder="Max age"
           value={maxAge}
           onChange={e => setMaxAge(e.target.value)}
-          style={{ marginRight: 8 }}
         />
-        <select value={skill} onChange={e => setSkill(e.target.value)} style={{ marginRight: 8 }}>
+        <select className="input" value={skill} onChange={e => setSkill(e.target.value)}>
           <option value="">All skills</option>
           {allSkills.map(s => <option key={s} value={s}>{s}</option>)}
         </select>
         <input
+          className="input"
           type="text"
           placeholder="Search by name"
           value={search}
           onChange={e => setSearch(e.target.value)}
-          style={{ marginRight: 8 }}
         />
       </div>
-      <div style={{ display: 'flex', gap: 32, alignItems: 'flex-start' }}>
-        <div style={{ flex: 2 }}>
-          <table border="1" cellPadding="6" style={{ width: '100%', marginBottom: 16 }}>
+      <div className="tables-row">
+        <div className="table-wrapper" style={{ flex: 3 }}>
+          <table className="person-table">
             <thead>
               <tr>
                 <th>Full Name</th>
@@ -105,26 +108,37 @@ function App() {
                   <td>{firstName} {lastName}</td>
                   <td>{age}</td>
                   <td>{city}</td>
-                  <td>{skills.join(', ')}</td>
-                  <td>{isActive ? 'Yes' : 'No'}</td>
+                  <td>
+                    {skills.map((sk, idx) => (
+                      <span key={sk} className="skill-badge" style={{ background: '#e0f7fa', color: '#00796b', marginRight: 4 }}>
+                        {sk}
+                        {idx < skills.length - 1 ? ',' : ''}
+                      </span>
+                    ))}
+                  </td>
+                  <td>
+                    <span className={isActive ? "active-badge" : "inactive-badge"}>
+                      {isActive ? 'Yes' : 'No'}
+                    </span>
+                  </td>
                 </tr>
               )) : (
                 <tr>
-                  <td colSpan={5} style={{ textAlign: 'center' }}>No found.</td>
+                  <td colSpan={5} style={{ textAlign: 'center', color: '#e53935', fontWeight: 'bold' }}>No found.</td>
                 </tr>
               )}
             </tbody>
           </table>
-          <div style={{ marginBottom: 16 }}>
+          <div className="statistics-box">
             <b>Statistics</b><br />
-            Total persons: {statistics.total}<br />
-            Average age: {statistics.avgAge}<br />
-            Active persons: {statistics.activeCount}
+            <span>Total persons: <span className="stat-value">{statistics.total}</span></span><br />
+            <span>Average age: <span className="stat-value">{statistics.avgAge}</span></span><br />
+            <span>Active persons: <span className="stat-value">{statistics.activeCount}</span></span>
           </div>
         </div>
-        <div style={{ flex: 1 }}>
-          <h3>Skill Ranking</h3>
-          <table border="1" cellPadding="6" style={{ width: '100%' }}>
+        <div className="table-wrapper" style={{ flex: 1, maxWidth: 260 }}>
+          <h3 className="skill-title">Skill Ranking</h3>
+          <table className="skill-table">
             <thead>
               <tr>
                 <th>Skill</th>
@@ -133,9 +147,9 @@ function App() {
             </thead>
             <tbody>
               {skillRanking.map(([skill, count], idx) => (
-                <tr key={skill}>
-                  <td style={idx === 0 ? { fontWeight: 'bold' } : {}}>{skill}</td>
-                  <td style={idx === 0 ? { fontWeight: 'bold' } : {}}>{count}</td>
+                <tr key={skill} className={idx === 0 ? "top-skill-row" : ""}>
+                  <td>{skill}</td>
+                  <td>{count}</td>
                 </tr>
               ))}
             </tbody>
