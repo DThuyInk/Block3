@@ -1,5 +1,6 @@
 const recipes = [
   {
+    id: 1,
     title: "Mediterranean Chickpea Salad",
     description: "A refreshing, protein-packed salad tossed in a lemon-olive oil dressing.",
     servings: 2,
@@ -8,6 +9,7 @@ const recipes = [
     image: "/images/mediterranean-chickpea-salad.jpg"
   },
   {
+    id: 2,
     title: "Avocado & Tomato Wholegrain Toast",
     description: "Creamy avocado spread over toasted wholegrain bread, topped with juicy tomatoes.",
     servings: 1,
@@ -16,6 +18,7 @@ const recipes = [
     image: "/images/avocado-tomato-toast.jpg"
   },
   {
+    id: 3,
     title: "One-Pan Lemon Garlic Salmon",
     description: "A 15-minute weeknight dinner of flaky salmon and tender asparagus.",
     servings: 2,
@@ -24,6 +27,7 @@ const recipes = [
     image: "/images/one-pan-lemon-garlic-salmon.jpg"
   },
   {
+    id: 4,
     title: "Quinoa Veggie Power Bowl",
     description: "A balanced bowl of fluffy quinoa, roasted veggies and healthy fats.",
     servings: 2,
@@ -32,6 +36,7 @@ const recipes = [
     image: "/images/quinoa-veggie-power-bowl.jpg"
   },
   {
+    id: 5,
     title: "Sweet Potato Black Bean Tacos",
     description: "Smoky roasted sweet potatoes and black beans tucked into warm tortillas.",
     servings: 3,
@@ -40,6 +45,7 @@ const recipes = [
     image: "/images/sweet-potato-black-bean-tacos.jpg"
   },
   {
+    id: 6,
     title: "Greek Yogurt Berry Parfait",
     description: "Layers of creamy yogurt, fresh berries and crunchy oats for a high-protein snack.",
     servings: 1,
@@ -48,6 +54,7 @@ const recipes = [
     image: "/images/greek-yogurt-berry-parfait.jpg"
   },
   {
+    id: 7,
     title: "Lentil & Spinach Soup",
     description: "A hearty 30-minute soup rich in plant protein and iron.",
     servings: 4,
@@ -56,6 +63,7 @@ const recipes = [
     image: "/images/lentil-spinach-soup.jpg"
   },
   {
+    id: 8,
     title: "Banana Oat Pancakes",
     description: "Flour-free pancakes sweetened naturally with ripe bananas.",
     servings: 2,

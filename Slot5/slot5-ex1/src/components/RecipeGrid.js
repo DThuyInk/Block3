@@ -2,13 +2,18 @@ import React from 'react';
 import { Row, Col } from 'react-bootstrap';
 import RecipeCard from './RecipeCard';
 
-function RecipeGrid({ recipes, onView }) {
+function RecipeGrid({ recipes, onView, onAddFavourite, favourites }) {
   return (
     <Row xs={1} md={2} lg={3} className="g-5">
       {recipes.length > 0 ? (
         recipes.map((recipe, idx) => (
           <Col key={idx}>
-            <RecipeCard recipe={recipe} onView={onView} />
+            <RecipeCard
+              recipe={recipe}
+              onView={onView}
+              onAddFavourite={onAddFavourite}
+              favourites={favourites}
+            />
           </Col>
         ))
       ) : (
