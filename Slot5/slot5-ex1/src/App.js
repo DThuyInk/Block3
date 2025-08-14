@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { Toast, Container, Dropdown, Pagination, Row, Col, Form } from 'react-bootstrap';
+import { Toast, Container, Pagination, Row, Col, Form } from 'react-bootstrap';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import recipes from './data/recipes';
-import AppNavbar from './components/Navbar';
 import Hero from './components/Hero';
 import Filters from './components/Filters';
 import RecipeGrid from './components/RecipeGrid';
