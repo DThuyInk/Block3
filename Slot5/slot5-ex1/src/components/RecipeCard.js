@@ -9,7 +9,7 @@ function RecipeCard({ recipe, onView, onAddFavourite, favourites }) {
       style={{
         borderRadius: '14px',
         overflow: 'hidden',
-        maxWidth: '320px', // Giới hạn chiều rộng card
+        maxWidth: '320px', 
         margin: '0 auto'
       }}
     >
@@ -17,14 +17,14 @@ function RecipeCard({ recipe, onView, onAddFavourite, favourites }) {
         variant="top"
         src={recipe.image}
         alt={recipe.title}
-        style={{ height: '140px', objectFit: 'cover' }} // Giảm chiều cao ảnh
+        style={{ height: '140px', objectFit: 'cover' }} 
       />
       <Card.Body className="d-flex flex-column px-2 pb-2 pt-2"> {/* Giảm padding */}
         <Card.Title
           className="mb-1"
           style={{
             fontWeight: 600,
-            fontSize: '1.1rem', // Giảm font
+            fontSize: '1.1rem', 
             fontFamily: 'Segoe UI, Arial, sans-serif',
             whiteSpace: 'nowrap',
             overflow: 'hidden',
