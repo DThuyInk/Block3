@@ -76,10 +76,9 @@ function RecipeCard({ recipe, onView, onAddFavourite, favourites }) {
               fontSize: '0.98rem',
               padding: '7px 0'
             }}
-            disabled={isFavourited}
           >
             <span style={{ fontSize: '1.1rem', marginRight: '6px' }}>♡</span>
-            Add to Favourite
+            {isFavourited ? "Remove from Favourite" : "Add to Favourite"}
             {isFavourited && <Badge bg="danger" style={{ marginLeft: '6px' }}>Added</Badge>}
           </Button>
           <Button

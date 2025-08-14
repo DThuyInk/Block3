@@ -26,14 +26,20 @@ function App() {
   const [showRequestModal, setShowRequestModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(6);
+  const [toastMessage, setToastMessage] = useState('');
 
-  // Add to favourite handler
+  // Add/remove favourite handler
   const handleAddFavourite = (recipe) => {
-    if (!favourites.some(r => r.id === recipe.id)) {
+    const isFavourite = favourites.some(r => r.id === recipe.id);
+    if (!isFavourite) {
       setFavourites([...favourites, recipe]);
-      setShowToast(true);
-      setTimeout(() => setShowToast(false), 5000);
+      setToastMessage('Added to favourites');
+    } else {
+      setFavourites(favourites.filter(r => r.id !== recipe.id));
+      setToastMessage('Removed from favourites');
     }
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 5000);
   };
 
   const handleViewRecipe = (recipe) => {
@@ -185,7 +191,7 @@ function App() {
               <span role="img" aria-label="heart" style={{ color: '#e74c3c', fontSize: '1.2rem', marginRight: '8px' }}>♡</span>
               <strong className="me-auto">Favourites</strong>
             </Toast.Header>
-            <Toast.Body>Added to favourites</Toast.Body>
+            <Toast.Body>{toastMessage}</Toast.Body>
           </Toast>
           <RecipeModal
             show={showModal}
