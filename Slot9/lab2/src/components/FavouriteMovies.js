@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Card, Row, Col, Button, Badge, Modal, Toast, ToastContainer, Alert } from 'react-bootstrap';
-import { movies } from '../data/movie';
+// import { movies } from '../data/movie';
 
 function truncate(str, n) {
   return str.length > n ? str.substr(0, n - 1) + '...' : str;

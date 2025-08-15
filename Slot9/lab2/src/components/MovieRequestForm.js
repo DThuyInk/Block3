@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Form, Button, Toast, ToastContainer, Alert } from 'react-bootstrap';
+import { Form, Button, Toast, ToastContainer } from 'react-bootstrap';
 import { allGenres } from '../data/movie';
 
 const initialState = {
