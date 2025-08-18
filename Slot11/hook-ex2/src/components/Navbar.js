@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Navbar = () => (
+const Navbar = ({search, setSearch}) => (
   <nav style={{
     display: 'flex',
     justifyContent: 'space-between',
@@ -26,6 +26,8 @@ const Navbar = () => (
       <input
         type="text"
         placeholder="Quick Search..."
+        value={search}
+        onChange={e => setSearch(e.target.value)}
         style={{padding: '0.4rem 0.8rem', borderRadius: '6px', border: 'none', fontSize: '1rem'}}
       />
     </div>

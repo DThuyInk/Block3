@@ -5,8 +5,7 @@ import SortDropdown from './SortDropdown';
 import StudentGrid from './StudentGrid';
 import StudentDetailModal from './StudentDetailModal';
 
-const StudentsPage = () => {
-  const [search, setSearch] = useState("");
+const StudentsPage = ({search, setSearch}) => {
   const [ageRange, setAgeRange] = useState('all');
   const [hasAvatar, setHasAvatar] = useState(false);
   const [sortType, setSortType] = useState('none');
