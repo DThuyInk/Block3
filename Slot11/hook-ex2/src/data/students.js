@@ -20,4 +20,33 @@ export const students = [
     age: 26,
     avatar: "/images/students/chi.jpg"
   }
+  ,
+  {
+    id: 4,
+    name: "Pham Duy",
+    email: "duy.pham@fpt.edu.vn",
+    age: 20,
+    avatar: null
+  },
+  {
+    id: 5,
+    name: "Hoang Giang",
+    email: "giang.hoang@fpt.edu.vn",
+    age: 23,
+    avatar: null
+  },
+  {
+    id: 6,
+    name: "Vo Hieu",
+    email: "hieu.vo@fpt.edu.vn",
+    age: 21,
+    avatar: null
+  },
+  {
+    id: 7,
+    name: "Nguyen Khanh",
+    email: "khanh.nguyen@fpt.edu.vn",
+    age: 25,
+    avatar: null
+  }
 ];

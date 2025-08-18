@@ -19,9 +19,17 @@ const Filters = ({search, setSearch, ageRange, setAgeRange, hasAvatar, setHasAva
       </select>
     </div>
     <div>
-      <label>
-        <input type="checkbox" checked={hasAvatar} onChange={e => setHasAvatar(e.target.checked)} />
-        <span style={{marginLeft: '0.5rem'}}>Has avatar</span>
+      <label style={{cursor: 'pointer', userSelect: 'none'}}>
+        <input
+          type="checkbox"
+          checked={hasAvatar}
+          onChange={e => setHasAvatar(e.target.checked)}
+          style={{cursor: 'pointer'}}
+        />
+        <span
+          style={{marginLeft: '0.5rem', cursor: 'pointer'}}
+          onClick={() => setHasAvatar(!hasAvatar)}
+        >Has avatar</span>
       </label>
     </div>
   </div>
