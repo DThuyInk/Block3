@@ -53,54 +53,65 @@ function ProfileForm({ onSubmit }) {
   };
 
   return (
-    <div style={{ maxWidth: 400, margin: "auto" }}>
-      <form onSubmit={handleSubmit}>
-        <div style={{ display: 'flex', alignItems: 'center', marginBottom: 8 }}>
+    <div style={{ maxWidth: 420, margin: "auto", padding: "0 8px" }}>
+      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+          <label style={{ fontWeight: 500, marginBottom: 2 }}>Name</label>
           <input
             type="text"
             placeholder="Enter your name"
             value={name}
             onChange={handleChange(setName, "name")}
-            style={{ flex: 1, minWidth: 0, width: '200px', boxSizing: 'border-box' }}
+            style={{ padding: '10px 12px', borderRadius: 6, border: '1px solid #ccc', fontSize: 16, outline: errors.name ? '2px solid #f44336' : 'none', transition: 'outline 0.2s' }}
           />
-          <div style={{ width: '180px', minHeight: '1em', marginLeft: 8, display: 'flex', alignItems: 'center' }}>
-            {errors.name && <span style={{ color: "red", whiteSpace: 'nowrap' }}>{errors.name}</span>}
-          </div>
+          {errors.name && <span style={{ color: "#f44336", fontSize: 13 }}>{errors.name}</span>}
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', marginBottom: 8 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+          <label style={{ fontWeight: 500, marginBottom: 2 }}>Email</label>
           <input
             type="email"
             placeholder="Enter your email"
             value={email}
             onChange={handleChange(setEmail, "email")}
-            style={{ flex: 1, minWidth: 0, width: '200px', boxSizing: 'border-box' }}
+            style={{ padding: '10px 12px', borderRadius: 6, border: '1px solid #ccc', fontSize: 16, outline: errors.email ? '2px solid #f44336' : 'none', transition: 'outline 0.2s' }}
           />
-          <div style={{ width: '180px', minHeight: '1em', marginLeft: 8, display: 'flex', alignItems: 'center' }}>
-            {errors.email && <span style={{ color: "red", whiteSpace: 'nowrap' }}>{errors.email}</span>}
-          </div>
+          {errors.email && <span style={{ color: "#f44336", fontSize: 13 }}>{errors.email}</span>}
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', marginBottom: 8 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+          <label style={{ fontWeight: 500, marginBottom: 2 }}>Age</label>
           <input
             type="number"
             placeholder="Enter your age"
             value={age}
             onChange={handleChange(setAge, "age")}
             min={1}
-            style={{ flex: 1, minWidth: 0, width: '200px', boxSizing: 'border-box' }}
+            style={{ padding: '10px 12px', borderRadius: 6, border: '1px solid #ccc', fontSize: 16, outline: errors.age ? '2px solid #f44336' : 'none', transition: 'outline 0.2s' }}
           />
-          <div style={{ width: '180px', minHeight: '1em', marginLeft: 8, display: 'flex', alignItems: 'center' }}>
-            {errors.age && <span style={{ color: "red", whiteSpace: 'nowrap' }}>{errors.age}</span>}
-          </div>
+          {errors.age && <span style={{ color: "#f44336", fontSize: 13 }}>{errors.age}</span>}
         </div>
         <button
           type="submit"
           disabled={!name || !email || !email.includes("@") || !age || isNaN(age) || Number(age) < 1}
+          style={{
+            background: 'linear-gradient(90deg, #005bea 0%, #00c6fb 100%)',
+            color: '#fff',
+            border: 'none',
+            borderRadius: 6,
+            padding: '12px 0',
+            fontSize: 17,
+            fontWeight: 600,
+            cursor: 'pointer',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+            marginTop: 8,
+            opacity: (!name || !email || !email.includes("@") || !age || isNaN(age) || Number(age) < 1) ? 0.6 : 1,
+            transition: 'opacity 0.2s'
+          }}
         >
           Submit
         </button>
       </form>
       {showToast && (
-        <div style={{ background: "#4caf50", color: "white", padding: "8px", marginTop: "10px" }}>
+        <div style={{ background: "#4caf50", color: "white", padding: "8px 16px", marginTop: "16px", borderRadius: 6, textAlign: 'center', fontWeight: 500 }}>
           Submitted successfully!
         </div>
       )}
@@ -114,16 +125,28 @@ function ProfileForm({ onSubmit }) {
           background: "rgba(0,0,0,0.3)",
           display: "flex",
           alignItems: "center",
-          justifyContent: "center"
+          justifyContent: "center",
+          zIndex: 1000
         }}>
-          <div style={{ background: "white", padding: 24, borderRadius: 8, minWidth: 300 }}>
-            <h2>Submitted Profile</h2>
-            <div style={{ border: "1px solid #eee", borderRadius: 6, padding: 16, marginBottom: 16 }}>
-              <p><strong>Name:</strong> {submittedData.name}</p>
-              <p><strong>Email:</strong> {submittedData.email}</p>
-              <p><strong>Age:</strong> {submittedData.age}</p>
+          <div style={{ background: "white", padding: 32, borderRadius: 12, minWidth: 320, boxShadow: '0 4px 24px rgba(0,0,0,0.12)' }}>
+            <h2 style={{ marginBottom: 16, textAlign: 'center' }}>Submitted Profile</h2>
+            <div style={{ border: "1px solid #eee", borderRadius: 8, padding: 18, marginBottom: 18, background: '#f7fafd' }}>
+              <p style={{ margin: '8px 0' }}><strong>Name:</strong> {submittedData.name}</p>
+              <p style={{ margin: '8px 0' }}><strong>Email:</strong> {submittedData.email}</p>
+              <p style={{ margin: '8px 0' }}><strong>Age:</strong> {submittedData.age}</p>
             </div>
-            <button onClick={() => setShowModal(false)}>Close</button>
+            <button onClick={() => setShowModal(false)} style={{
+              background: 'linear-gradient(90deg, #005bea 0%, #00c6fb 100%)',
+              color: '#fff',
+              border: 'none',
+              borderRadius: 6,
+              padding: '10px 0',
+              fontSize: 16,
+              fontWeight: 500,
+              cursor: 'pointer',
+              width: '100%',
+              marginTop: 8
+            }}>Close</button>
           </div>
         </div>
       )}
