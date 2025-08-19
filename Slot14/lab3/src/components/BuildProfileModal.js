@@ -8,7 +8,7 @@ const modalStyle = {
   left: 0,
   width: "100vw",
   height: "100vh",
-  background: "rgba(0,0,0,0.3)",
+  background: "rgba(0,0,0,0.35)",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
@@ -16,12 +16,14 @@ const modalStyle = {
 };
 
 const cardStyle = {
-  background: "#fff",
-  borderRadius: "10px",
-  padding: "32px 40px",
-  minWidth: "420px",
-  boxShadow: "0 4px 24px rgba(0,0,0,0.12)",
+  background: "linear-gradient(135deg, #f6faff 0%, #eaf3ff 100%)",
+  borderRadius: "18px",
+  padding: "40px 48px",
+  minWidth: "440px",
+  maxWidth: "520px",
+  boxShadow: "0 8px 32px rgba(0,0,0,0.18)",
   position: "relative",
+  border: "1.5px solid #eaeaea",
 };
 
 const tabStyle = {
@@ -68,6 +70,7 @@ function BuildProfileModal({ onClose }) {
     email: "",
     picture: null,
   });
+  const fileInputRef = React.useRef();
   const [touched, setTouched] = useState({ firstName: false, lastName: false, email: false });
 
   // Account tab state
@@ -98,6 +101,21 @@ function BuildProfileModal({ onClose }) {
   const emailValid = validateEmail(about.email);
   const aboutValid = firstNameValid && lastNameValid && emailValid;
 
+  // Xử lý chọn ảnh
+  const handleChoosePicture = () => {
+    if (fileInputRef.current) fileInputRef.current.click();
+  };
+  const handlePictureChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        setAbout(a => ({ ...a, picture: ev.target.result }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <div style={modalStyle}>
       <div style={cardStyle}>
@@ -108,26 +126,72 @@ function BuildProfileModal({ onClose }) {
         >
           ×
         </button>
-        <h2 style={{ textAlign: "center", marginBottom: 16, fontWeight: "bold" }}>BUILD YOUR PROFILE</h2>
-        <div style={tabStyle}>
+        <h2 style={{
+          textAlign: "center",
+          marginBottom: 32,
+          fontWeight: 800,
+          fontSize: 28,
+          letterSpacing: 1,
+          color: "#3b79ff",
+          textShadow: "0 2px 8px #eaf3ff",
+        }}>BUILD YOUR PROFILE</h2>
+        <div style={{ ...tabStyle, marginBottom: 32 }}>
           <button style={tabItemStyle(tab === 0)} disabled>About</button>
           <button style={tabItemStyle(tab === 1)} disabled={tab < 1}>Account</button>
           <button style={tabItemStyle(tab === 2)} disabled={tab < 2}>Address</button>
-          </div>
+        </div>
         {tab === 0 && (
           <div style={{ display: "flex", alignItems: "center", gap: 32 }}>
-            <div style={{ textAlign: "center" }}>
-              <div style={{ width: 120, height: 120, border: "2px solid #eaeaea", borderRadius: "50%", marginBottom: 8, display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <div style={{ textAlign: "center", marginBottom: 48 }}>
+              <input
+                type="file"
+                accept="image/*"
+                style={{ display: "none" }}
+                ref={fileInputRef}
+                onChange={handlePictureChange}
+              />
+              <div
+                style={{
+                  width: 120,
+                  height: 120,
+                  borderRadius: "50%",
+                  border: "3px solid #3b79ff33",
+                  boxShadow: "0 2px 12px #3b79ff22",
+                  marginBottom: 8,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                  overflow: "hidden",
+                  background: "#fff",
+                }}
+                onClick={handleChoosePicture}
+                title="Click to choose picture"
+              >
                 {about.picture ? (
-                  <img src={about.picture} alt="Profile" style={{ width: "100%", height: "100%", borderRadius: "50%" }} />
+                  <img src={about.picture} alt="Profile" style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "50%" }} />
                 ) : (
                   <svg width="60" height="60" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="#bbb" strokeWidth="2"/><rect x="6" y="14" width="12" height="6" rx="3" stroke="#bbb" strokeWidth="2"/></svg>
                 )}
               </div>
-              <div style={{ fontWeight: "bold", fontSize: 14 }}>CHOOSE PICTURE</div>
+              <div
+                style={{ fontWeight: 700, fontSize: 15, cursor: "pointer", color: "#3b79ff", letterSpacing: 0.5, marginTop: 2 }}
+                onClick={handleChoosePicture}
+              >CHOOSE PICTURE</div>
             </div>
-            <form style={{ flex: 1, display: "flex", flexDirection: "column", gap: 16 }} autoComplete="off">
+            <form style={{
+              flex: 1,
+              display: "flex",
+              flexDirection: "column",
+              gap: 16,
+              background: "#f6faff",
+              borderRadius: 10,
+              padding: "24px 28px",
+              boxShadow: "0 2px 8px #eaf3ff44",
+              border: "1px solid #eaeaea",
+            }} autoComplete="off">
               <div>
+                <div style={{ fontWeight: 700, fontSize: 16, color: '#3b79ff', marginBottom: 6 }}>About Information</div>
                 <input
                   type="text"
                   value={about.firstName}
@@ -185,14 +249,17 @@ function BuildProfileModal({ onClose }) {
                 type="button"
                 style={{
                   marginTop: 16,
-                  background: aboutValid ? '#3b79ffff' : '#eaeaea',
+                  width: '40%',
+                  background: aboutValid ? 'linear-gradient(90deg, #3b79ff 0%, #44c3ff 100%)' : '#eaeaea',
                   color: aboutValid ? '#fff' : '#aaa',
                   border: 'none',
-                  borderRadius: 6,
-                  padding: '12px 0',
-                  fontWeight: 'bold',
-                  fontSize: 16,
+                  borderRadius: 8,
+                  padding: '14px 0',
+                  fontWeight: 700,
+                  fontSize: 17,
                   cursor: aboutValid ? 'pointer' : 'not-allowed',
+                  letterSpacing: 1,
+                  boxShadow: aboutValid ? '0 2px 8px #3b79ff44' : 'none',
                   transition: 'background 0.2s',
                 }}
                 disabled={!aboutValid}
@@ -204,8 +271,20 @@ function BuildProfileModal({ onClose }) {
           </div>
         )}
         {tab === 1 && (
-          <form style={{ maxWidth: 400, margin: "0 auto", display: "flex", flexDirection: "column", gap: 16 }} autoComplete="off">
+          <form style={{
+            maxWidth: 400,
+            margin: "0 auto",
+            display: "flex",
+            flexDirection: "column",
+            gap: 16,
+            background: "#f6faff",
+            borderRadius: 10,
+            padding: "24px 28px",
+            boxShadow: "0 2px 8px #eaf3ff44",
+            border: "1px solid #eaeaea",
+          }} autoComplete="off">
             <div style={{ textAlign: "left" }}>
+              <div style={{ fontWeight: 700, fontSize: 16, color: '#3b79ff', marginBottom: 6 }}>Account Information</div>
               <input
                 type="text"
                 value={account.username}
@@ -334,14 +413,16 @@ function BuildProfileModal({ onClose }) {
             <button
               type="button"
               style={{
-                background: accountValid ? '#3b79ffff' : '#eaeaea',
+                background: accountValid ? 'linear-gradient(90deg, #3b79ff 0%, #44c3ff 100%)' : '#eaeaea',
                 color: accountValid ? '#fff' : '#aaa',
                 border: 'none',
-                borderRadius: 6,
-                padding: '12px 40px',
-                fontWeight: 'bold',
-                fontSize: 16,
+                borderRadius: 8,
+                padding: '14px 40px',
+                fontWeight: 700,
+                fontSize: 17,
                 cursor: accountValid ? 'pointer' : 'not-allowed',
+                letterSpacing: 1,
+                boxShadow: accountValid ? '0 2px 8px #3b79ff44' : 'none',
                 transition: 'background 0.2s',
               }}
               disabled={!accountValid}
@@ -353,7 +434,19 @@ function BuildProfileModal({ onClose }) {
           </form>
         )}
         {tab === 2 && (
-          <form style={{ maxWidth: 440, margin: "0 auto", display: "flex", flexDirection: "column", gap: 16 }} autoComplete="off">
+          <form style={{
+            maxWidth: 440,
+            margin: "0 auto",
+            display: "flex",
+            flexDirection: "column",
+            gap: 16,
+            background: "#f6faff",
+            borderRadius: 10,
+            padding: "24px 28px",
+            boxShadow: "0 2px 8px #eaf3ff44",
+            border: "1px solid #eaeaea",
+          }} autoComplete="off">
+            <div style={{ fontWeight: 700, fontSize: 16, color: '#3b79ff', marginBottom: 6 }}>Address Information</div>
             <div style={{ display: "flex", gap: 16 }}>
               <div style={{ flex: 1 }}>
                 <input
@@ -446,11 +539,12 @@ function BuildProfileModal({ onClose }) {
                   background: '#fff',
                   color: '#333',
                   border: '1.5px solid #eaeaea',
-                  borderRadius: 6,
-                  padding: '12px 32px',
-                  fontWeight: 'bold',
-                  fontSize: 16,
+                  borderRadius: 8,
+                  padding: '14px 32px',
+                  fontWeight: 700,
+                  fontSize: 17,
                   cursor: 'pointer',
+                  letterSpacing: 1,
                 }}
                 onClick={() => setTab(1)}
               >
@@ -459,14 +553,16 @@ function BuildProfileModal({ onClose }) {
               <button
                 type="button"
                 style={{
-                  background: addressValid ? '#3b79ffff' : '#eaeaea',
+                  background: addressValid ? 'linear-gradient(90deg, #3b79ff 0%, #44c3ff 100%)' : '#eaeaea',
                   color: addressValid ? '#fff' : '#aaa',
                   border: 'none',
-                  borderRadius: 6,
-                  padding: '12px 32px',
-                  fontWeight: 'bold',
-                  fontSize: 16,
+                  borderRadius: 8,
+                  padding: '14px 32px',
+                  fontWeight: 700,
+                  fontSize: 17,
                   cursor: addressValid ? 'pointer' : 'not-allowed',
+                  letterSpacing: 1,
+                  boxShadow: addressValid ? '0 2px 8px #3b79ff44' : 'none',
                   transition: 'background 0.2s',
                 }}
                 disabled={!addressValid}
@@ -491,33 +587,68 @@ function BuildProfileModal({ onClose }) {
           left: 0,
           width: '100vw',
           height: '100vh',
-          background: 'rgba(0,0,0,0.3)',
+          background: 'rgba(0,0,0,0.35)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           zIndex: 2000,
         }}>
-          <div style={{ background: '#fff', borderRadius: 12, padding: 32, minWidth: 420, boxShadow: '0 4px 24px rgba(0,0,0,0.12)', position: 'relative' }}>
-            <h2 style={{ textAlign: 'center', fontWeight: 'bold', marginBottom: 24 }}>Your Profile</h2>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 24, marginBottom: 24 }}>
-              <div style={{ width: 100, height: 100, borderRadius: '50%', border: '2px solid #eaeaea', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#f6faff' }}>
+          <div style={{
+            background: 'linear-gradient(135deg, #f6faff 0%, #eaf3ff 100%)',
+            borderRadius: 18,
+            padding: '40px 48px',
+            minWidth: 440,
+            maxWidth: 520,
+            boxShadow: '0 8px 32px rgba(0,0,0,0.18)',
+            position: 'relative',
+            border: '1.5px solid #eaeaea',
+          }}>
+            <h2 style={{
+              textAlign: 'center',
+              fontWeight: 800,
+              marginBottom: 32,
+              fontSize: 28,
+              letterSpacing: 1,
+              color: '#3b79ff',
+              textShadow: '0 2px 8px #eaf3ff',
+            }}>Your Profile</h2>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 32, marginBottom: 32 }}>
+              <div style={{
+                width: 110,
+                height: 110,
+                borderRadius: '50%',
+                border: '3px solid #3b79ff33',
+                boxShadow: '0 2px 12px #3b79ff22',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                background: '#fff',
+                overflow: 'hidden',
+              }}>
                 {about.picture ? (
-                  <img src={about.picture} alt="Avatar" style={{ width: '100%', height: '100%', borderRadius: '50%' }} />
+                  <img src={about.picture} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%' }} />
                 ) : (
                   <svg width="60" height="60" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="#bbb" strokeWidth="2"/><rect x="6" y="14" width="12" height="6" rx="3" stroke="#bbb" strokeWidth="2"/></svg>
                 )}
               </div>
               <div style={{ flex: 1 }}>
-                <div style={{ fontWeight: 'bold', fontSize: 18, marginBottom: 8 }}>About</div>
-                <div>First Name: {about.firstName}</div>
-                <div>Last Name: {about.lastName}</div>
-                <div>Email: {about.email}</div>
+                <div style={{ fontWeight: 700, fontSize: 18, marginBottom: 10, color: '#3b79ff' }}>About</div>
+                <div style={{ fontSize: 16, marginBottom: 4 }}><span style={{ fontWeight: 600 }}>First Name:</span> {about.firstName}</div>
+                <div style={{ fontSize: 16, marginBottom: 4 }}><span style={{ fontWeight: 600 }}>Last Name:</span> {about.lastName}</div>
+                <div style={{ fontSize: 16 }}><span style={{ fontWeight: 600 }}>Email:</span> {about.email}</div>
               </div>
             </div>
-            <div style={{ marginBottom: 16 }}>
-              <div style={{ fontWeight: 'bold', fontSize: 18, marginBottom: 8 }}>Account</div>
-              <div>User name: {account.username}</div>
-              <div>Secret question: {(() => {
+            <div style={{
+              background: '#f6faff',
+              borderRadius: 10,
+              padding: '18px 24px',
+              marginBottom: 18,
+              boxShadow: '0 2px 8px #eaf3ff44',
+              border: '1px solid #eaeaea',
+            }}>
+              <div style={{ fontWeight: 700, fontSize: 18, marginBottom: 10, color: '#3b79ff' }}>Account</div>
+              <div style={{ fontSize: 16, marginBottom: 4 }}><span style={{ fontWeight: 600 }}>User name:</span> {account.username}</div>
+              <div style={{ fontSize: 16, marginBottom: 4 }}><span style={{ fontWeight: 600 }}>Secret question:</span> {(() => {
                 switch(account.question) {
                   case 'pet': return 'What is your first pet’s name?';
                   case 'mother': return 'What is your mother’s maiden name?';
@@ -526,18 +657,38 @@ function BuildProfileModal({ onClose }) {
                   default: return '';
                 }
               })()}</div>
-              <div>Answer: {account.answer}</div>
+              <div style={{ fontSize: 16 }}><span style={{ fontWeight: 600 }}>Answer:</span> {account.answer}</div>
             </div>
-            <div>
-              <div style={{ fontWeight: 'bold', fontSize: 18, marginBottom: 8 }}>Address</div>
-              <div>Street Name: {address.streetName}</div>
-              <div>Street Number: {address.streetNumber}</div>
-              <div>City: {address.city}</div>
-              <div>Country: {address.country}</div>
+            <div style={{
+              background: '#f6faff',
+              borderRadius: 10,
+              padding: '18px 24px',
+              boxShadow: '0 2px 8px #eaf3ff44',
+              border: '1px solid #eaeaea',
+            }}>
+              <div style={{ fontWeight: 700, fontSize: 18, marginBottom: 10, color: '#3b79ff' }}>Address</div>
+              <div style={{ fontSize: 16, marginBottom: 4 }}><span style={{ fontWeight: 600 }}>Street Name:</span> {address.streetName}</div>
+              <div style={{ fontSize: 16, marginBottom: 4 }}><span style={{ fontWeight: 600 }}>Street Number:</span> {address.streetNumber}</div>
+              <div style={{ fontSize: 16, marginBottom: 4 }}><span style={{ fontWeight: 600 }}>City:</span> {address.city}</div>
+              <div style={{ fontSize: 16 }}><span style={{ fontWeight: 600 }}>Country:</span> {address.country}</div>
             </div>
             <button
               type="button"
-              style={{ marginTop: 32, background: '#3b79ffff', color: '#fff', border: 'none', borderRadius: 6, padding: '12px 32px', fontWeight: 'bold', fontSize: 16, cursor: 'pointer', float: 'right' }}
+              style={{
+                marginTop: 36,
+                background: 'linear-gradient(90deg, #3b79ff 0%, #44c3ff 100%)',
+                color: '#fff',
+                border: 'none',
+                borderRadius: 8,
+                padding: '14px 40px',
+                fontWeight: 700,
+                fontSize: 18,
+                cursor: 'pointer',
+                float: 'right',
+                boxShadow: '0 2px 8px #3b79ff44',
+                letterSpacing: 1,
+                transition: 'background 0.2s',
+              }}
               onClick={() => { setShowProfile(false); onClose(); }}
             >
               Close
