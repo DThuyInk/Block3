@@ -4,7 +4,7 @@ import ProfileForm from "./ProfileForm";
 function App() {
   return (
     <div className="app-container">
-      <header className="app-header">
+      <header className="app-header" align="center">
         <h1>Profile Form</h1>
       </header>
       <main className="app-main">
@@ -12,7 +12,7 @@ function App() {
           <ProfileForm />
         </div>
       </main>
-      <footer className="app-footer">
+      <footer className="app-footer" align="center">
         <p>&copy; 2025 Profile App. All rights reserved.</p>
       </footer>
     </div>
