@@ -1,6 +1,8 @@
 import React from "react";
+import { useTheme } from "../context/ThemeContext";
 
-function NavBar({ darkMode, setDarkMode }) {
+function NavBar() {
+  const { darkMode, setDarkMode } = useTheme();
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light mb-3">
       <div className="container-fluid">
