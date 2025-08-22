@@ -19,20 +19,22 @@ function AppContent() {
   };
 
   return (
-    <CartProvider>
-      <NavBar />
-      <div className="App container py-4" style={appStyle}>
-        <div className="row">
-          <div className="col-md-8 mb-4">
-            <DishesList dishes={dishes} />
-          </div>
-          <div className="col-md-4">
-            <Cart />
+    <div style={appStyle}>
+      <CartProvider>
+        <NavBar />
+        <div className="App container py-4">
+          <div className="row">
+            <div className="col-md-8 mb-4">
+              <DishesList dishes={dishes} />
+            </div>
+            <div className="col-md-4">
+              <Cart />
+            </div>
           </div>
         </div>
-      </div>
-      <Footer />
-    </CartProvider>
+        <Footer />
+      </CartProvider>
+    </div>
   );
 }
 

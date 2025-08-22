@@ -1,15 +1,6 @@
-.dishes {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-}
 
-.dish-item {
-  border: 1px solid #ccc;
-  padding: 16px;
-  width: 200px;
-  text-align: center;
-}
+  /* Đã xóa các thuộc tính lẻ, thay bằng selector chuẩn bên dưới */
+
 
 .dish-item img {
   width: 100%;
@@ -25,6 +16,7 @@
   cursor: pointer;
 }
 
+/* Ghi đè style Bootstrap cho navbar */
 .dish-item button:hover {
   background-color: #45a049;
 }
