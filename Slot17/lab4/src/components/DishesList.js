@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { CartContext } from "../CartContext";
+import { CartContext } from "../context/CartContext";
 import PropTypes from "prop-types";
 
 // DishesList component renders the list of dishes and adds them to the cart

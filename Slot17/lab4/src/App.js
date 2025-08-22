@@ -1,40 +1,12 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { CartProvider } from "./CartContext";
+import { CartProvider } from "./context/CartContext";
 import DishesList from "./components/DishesList";
 import Cart from "./components/Cart";
 import "./styles.css";
-// Sample dishes array
-const dishes = [
-  {
-    id: 0,
-    name: "Uthappizza",
-    image: "images/uthappizza.png",
-    price: "4.99",
-    description: "A unique combination of Indian Uthappam and Italian pizza.",
-  },
-  {
-    id: 1,
-    name: "Zucchipakoda",
-    image: "images/zucchipakoda.png",
-    price: "1.99",
-    description: "Deep fried Zucchini with chickpea batter.",
-  },
-  {
-    id: 2,
-    name: "Vadonut",
-    image: "images/vadonut.png",
-    price: "1.99",
-    description: "A combination of vada and donut.",
-  },
-  {
-    id: 3,
-    name: "ElaiCheese Cake",
-    image: "images/elaicheesecake.png",
-    price: "2.99",
-    description: "New York Style Cheesecake with Indian cardamoms.",
-  },
-];
+import NavBar from "./components/NavBar";
+import Footer from "./components/Footer";
+import dishes from "./data/dishes";
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -48,16 +20,9 @@ function App() {
 
   return (
     <CartProvider>
+      <NavBar darkMode={darkMode} setDarkMode={setDarkMode} />
       <div className="App container py-4" style={appStyle}>
-        <div className="d-flex justify-content-between align-items-center mb-4">
-          <h1 className="fw-bold">Food Order App</h1>
-          <button
-            onClick={() => setDarkMode((prev) => !prev)}
-            className={`btn ${darkMode ? "btn-info" : "btn-dark"}`}
-          >
-            {darkMode ? "Chuyển sang chế độ Sáng" : "Chuyển sang chế độ Tối"}
-          </button>
-        </div>
+        {/* ...existing code... */}
         <div className="row">
           <div className="col-md-8 mb-4">
             <DishesList dishes={dishes} />
@@ -67,6 +32,7 @@ function App() {
           </div>
         </div>
       </div>
+      <Footer />
     </CartProvider>
   );
 }
