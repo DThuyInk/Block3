@@ -1,0 +1,102 @@
+const dishes = [
+  {
+    id: 0,
+    name: "Bánh Uthappizza",
+    image: "images/uthappizza.png",
+    price: "4.99",
+    description: "Sự kết hợp độc đáo giữa bánh Uthappam Ấn Độ và pizza Ý.",
+  },
+  {
+    id: 1,
+    name: "Bánh Zucchipakoda",
+    image: "images/zucchipakoda.png",
+    price: "1.99",
+    description: "Bí ngòi chiên giòn với lớp bột đậu xanh.",
+  },
+  {
+    id: 2,
+    name: "Bánh Vadonut",
+    image: "images/vadonut.png",
+    price: "1.99",
+    description: "Sự kết hợp giữa bánh vada truyền thống và donut hiện đại.",
+  },
+  {
+    id: 3,
+    name: "Bánh ElaiCheese Cake",
+    image: "images/elaicheesecake.png",
+    price: "2.99",
+    description: "Bánh cheesecake kiểu New York với hương vị thảo quả Ấn Độ.",
+  },
+  {
+    id: 4,
+    name: "Paneer Tikka",
+    image: "images/paneertikka.png",
+    price: "3.99",
+    description: "Phô mai Ấn Độ nướng, ướp gia vị đặc biệt.",
+  },
+  {
+    id: 5,
+    name: "Cà ri gà",
+    image: "images/chickencurry.png",
+    price: "5.99",
+    description: "Cà ri gà truyền thống Ấn Độ với hương vị đậm đà.",
+  },
+  {
+    id: 6,
+    name: "Bánh Masala Dosa",
+    image: "images/masaladosa.png",
+    price: "2.49",
+    description: "Bánh crepe gạo giòn, nhân khoai tây cay.",
+  },
+  {
+    id: 7,
+    name: "Bánh mì Butter Naan",
+    image: "images/butternaan.png",
+    price: "1.49",
+    description: "Bánh mì Ấn Độ mềm, phủ bơ thơm béo.",
+  },
+  {
+    id: 8,
+    name: "Bánh Gulab Jamun",
+    image: "images/gulabjamun.png",
+    price: "2.49",
+    description: "Viên sữa ngọt ngào ngâm trong siro hoa hồng.",
+  },
+  {
+    id: 9,
+    name: "Bánh Samosa",
+    image: "images/samosa.png",
+    price: "1.29",
+    description: "Bánh chiên giòn nhân khoai tây và đậu Hà Lan cay.",
+  },
+  {
+    id: 10,
+    name: "Palak Paneer",
+    image: "images/palakpaneer.png",
+    price: "4.49",
+    description: "Cải bó xôi và phô mai nấu với gia vị nhẹ.",
+  },
+  {
+    id: 11,
+    name: "Bánh mì Tandoori Roti",
+    image: "images/tandooriroti.png",
+    price: "1.19",
+    description: "Bánh mì nguyên cám nướng trong lò tandoor.",
+  },
+  {
+    id: 12,
+    name: "Mango Lassi",
+    image: "images/mangolassi.png",
+    price: "2.99",
+    description: "Thức uống sữa chua xoài mát lạnh, bổ dưỡng.",
+  },
+  {
+    id: 13,
+    name: "Chole Bhature",
+    image: "images/cholebhature.png",
+    price: "3.99",
+    description: "Cà ri đậu gà cay ăn kèm bánh mì chiên giòn.",
+  }
+];
+
+export default dishes;
