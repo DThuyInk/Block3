@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import '../styles.css';
-
+// import Button from 'react-bootstrap/Button';
 
 const images = [
   {

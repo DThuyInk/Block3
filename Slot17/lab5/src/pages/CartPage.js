@@ -3,6 +3,7 @@ import { CartContext } from "../context/CartContext";
 import { useTheme } from "../context/ThemeContext";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
+// import Button from 'react-bootstrap/Button';
 
 const CartPage = ({ onBack, onFavourite, onLogout, onGoToCart }) => {
   const { cartItems, removeFromCart, clearCart, totalValue } = useContext(CartContext);
