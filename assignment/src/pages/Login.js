@@ -3,6 +3,7 @@ import { Container, Form, Button, Alert, Modal } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import Footer from '../components/Footer';
 
 const Login = ({ setUser }) => {
 	const navigate = useNavigate();
@@ -123,6 +124,7 @@ const Login = ({ setUser }) => {
 				  </Modal.Footer>
 				</Modal>
 			  </div>
+			<Footer />
 			</Container>
 	);
 };

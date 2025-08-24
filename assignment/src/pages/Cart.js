@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useCart } from '../contexts/CartContext';
 import { useFigures } from '../contexts/FigureContext';
 import axios from 'axios';
+import Footer from '../components/Footer';
 
 const Cart = () => {
   const navigate = useNavigate();
@@ -57,7 +58,7 @@ const Cart = () => {
 
   if (cartItems.length === 0) {
     return (
-      <Container className="py-4">
+  <Container className="py-4" style={{ paddingBottom: '60px' }}>
         <div className="text-center">
           <h2>Your Cart is Empty</h2>
           <p>Add some figures to your cart to see them here.</p>
@@ -70,11 +71,13 @@ const Cart = () => {
   }
 
   return (
-    <Container className="py-4">
-      <div className="d-flex justify-content-between align-items-center mb-4">
-        <h1>Your Cart</h1>
-        <Button variant="secondary" onClick={handleBackToList}>
-          Continue Shopping
+    <>
+      
+      <Container className="py-4">
+        <div className="d-flex justify-content-between align-items-center mb-4">
+          <h1>Your Cart</h1>
+          <Button variant="secondary" onClick={handleBackToList}>
+            Continue Shopping
         </Button>
       </div>
 
@@ -168,8 +171,10 @@ const Cart = () => {
             </div>
           </div>
         </Col>
-      </Row>
+      </Row> 
+      <Footer />     
     </Container>
+    </>
   );
 };
 

@@ -1,8 +1,10 @@
 import React, { useState, useMemo } from 'react';
+import Footer from '../components/Footer';
 import { Container, Row, Col, Card, Button, Form, Alert, Spinner } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useFigures } from '../contexts/FigureContext';
 import { useCart } from '../contexts/CartContext';
+import Carousel from '../components/Carousel';
 
 const FigureList = () => {
 	const navigate = useNavigate();
@@ -33,17 +35,13 @@ const FigureList = () => {
 		);
 
 		if (sortOrder === 'lowToHigh') {
-			filtered.sort((a, b) => {
-				const priceA = Number(a.price.replace(/[^\d]/g, ''));
-				const priceB = Number(b.price.replace(/[^\d]/g, ''));
-				return priceA - priceB;
-			});
+			filtered.sort((a, b) => Number(a.price.replace(/[^\d]/g, '')) - Number(b.price.replace(/[^\d]/g, '')));
 		} else if (sortOrder === 'highToLow') {
-			filtered.sort((a, b) => {
-				const priceA = Number(a.price.replace(/[^\d]/g, ''));
-				const priceB = Number(b.price.replace(/[^\d]/g, ''));
-				return priceB - priceA;
-			});
+			filtered.sort((a, b) => Number(b.price.replace(/[^\d]/g, '')) - Number(a.price.replace(/[^\d]/g, '')));
+		} else if (sortOrder === 'nameAZ') {
+			filtered.sort((a, b) => a.name.localeCompare(b.name));
+		} else if (sortOrder === 'nameZA') {
+			filtered.sort((a, b) => b.name.localeCompare(a.name));
 		}
 
 		return filtered;
@@ -91,88 +89,104 @@ const FigureList = () => {
 		);
 	}
 
-	return (
-		<Container className="mt-5">
-			<Row className="mb-3">
-				<Col md={6}>
-					<Form.Control
-						type="text"
-						placeholder="Search figures..."
-						value={searchTerm}
-						onChange={e => setSearchTerm(e.target.value)}
-					/>
-				</Col>
-				<Col md={6} className="d-flex justify-content-end">
-					<Form.Select
-						value={sortOrder}
-						onChange={e => setSortOrder(e.target.value)}
-						style={{ maxWidth: '200px' }}
-					>
-						<option value="">Sort by Price</option>
-						<option value="lowToHigh">Low to High</option>
-						<option value="highToLow">High to Low</option>
-					</Form.Select>
-				</Col>
-			</Row>
-			<Row>
-				{filteredAndSortedFigures.map(figure => (
-					<Col key={figure.id} lg={3} md={6} className="mb-4">
-						<Card>
-							<Card.Img 
-								variant="top" 
-								src={figure.image} 
-								style={{ height: '200px', objectFit: 'cover', objectPosition: 'top' }}
-								onError={(e) => {
-									e.target.src = '/logo192.png'; // Fallback image
-								}} 
-							/>
-							<Card.Body>
-								<Card.Title>{figure.name} {figure.type}</Card.Title>
-								<Card.Text>
-									<strong>Brand:</strong> {figure.brand}<br />
-									<strong>Price:</strong> {figure.price}<br />
-									<strong>Stock:</strong> {figure.stock}
-								</Card.Text>
-								<div className="mt-auto">
-									<div className="d-grid gap-2">
-										<Button 
-											variant="primary" 
-											onClick={() => handleViewDetails(figure.id)}
-										>
-											View Details
-										</Button>
-										<Button 
-											variant="success" 
-											onClick={() => handleAddToCart(figure)}
-											disabled={figure.stock === 0}
-										>
-											Add to Cart
-										</Button>
-										{favourites.includes(figure.id) ? (
-											<Button
-												variant="secondary"
-												onClick={() => handleRemoveFavourite(figure)}
-											>
-												Remove from Favourites
-											</Button>
-										) : (
-											<Button
-												variant="danger"
-												onClick={() => handleAddFavourite(figure)}
-											>
-												Add to Favourites
-											</Button>
-										)}
-									</div>
-								</div>
-							</Card.Body>
-						</Card>
-					</Col>
-				))}
-			</Row>
-			{showAlert && <Alert variant="info" className="mt-3">{alertMessage}</Alert>}
-		</Container>
-	);
+	   return (
+		   <>
+			   <Container className="mt-5">
+				   {/* Carousel Banner */}
+				   <Row className="mb-4">
+					   <Col xs={12}>
+						   <Carousel
+							   figures={figures.slice(0, 4).map(f => ({
+								   ...f,
+								   alt: `${f.name} - ${f.brand}`
+							   }))}
+						   />
+					   </Col>
+				   </Row>
+				   <Row className="mb-3">
+					   <Col md={6}>
+						   <Form.Control
+							   type="text"
+							   placeholder="Search figures..."
+							   value={searchTerm}
+							   onChange={e => setSearchTerm(e.target.value)}
+						   />
+					   </Col>
+					   <Col md={6} className="d-flex justify-content-end">
+						   <Form.Select
+							   value={sortOrder}
+							   onChange={e => setSortOrder(e.target.value)}
+							   style={{ maxWidth: '200px' }}
+						   >
+							   <option value="">Sort by...</option>
+							   <option value="lowToHigh">Price Low to High</option>
+							   <option value="highToLow">Price High to Low</option>
+							   <option value="nameAZ">Name A → Z</option>
+							   <option value="nameZA">Name Z → A</option>
+						   </Form.Select>
+					   </Col>
+				   </Row>
+				   <Row>
+					   {filteredAndSortedFigures.map(figure => (
+						   <Col key={figure.id} lg={3} md={6} className="mb-4">
+							   <Card>
+								   <Card.Img 
+									   variant="top" 
+									   src={figure.image} 
+									   style={{ height: '200px', objectFit: 'cover', objectPosition: 'top' }}
+									   onError={(e) => {
+										   e.target.src = '/logo192.png'; // Fallback image
+									   }} 
+								   />
+								   <Card.Body>
+									   <Card.Title>{figure.name} {figure.type}</Card.Title>
+									   <Card.Text>
+										   <strong>Brand:</strong> {figure.brand}<br />
+										   <strong>Price:</strong> {figure.price}<br />
+										   <strong>Stock:</strong> {figure.stock}
+									   </Card.Text>
+									   <div className="mt-auto">
+										   <div className="d-grid gap-2">
+											   <Button 
+												   variant="primary" 
+												   onClick={() => handleViewDetails(figure.id)}
+											   >
+												   View Details
+											   </Button>
+											   <Button 
+												   variant="success" 
+												   onClick={() => handleAddToCart(figure)}
+												   disabled={figure.stock === 0}
+											   >
+												   Add to Cart
+											   </Button>
+											   {favourites.includes(figure.id) ? (
+												   <Button
+													   variant="secondary"
+													   onClick={() => handleRemoveFavourite(figure)}
+												   >
+													   Remove from Favourites
+												   </Button>
+											   ) : (
+												   <Button
+													   variant="danger"
+													   onClick={() => handleAddFavourite(figure)}
+												   >
+													   Add to Favourites
+												   </Button>
+											   )}
+										   </div>
+									   </div>
+								   </Card.Body>
+							   </Card>
+						   </Col>
+					   ))}
+				   </Row>
+				   {showAlert && <Alert variant="info" className="mt-3">{alertMessage}</Alert>}
+			   </Container>
+			   <Footer />
+		   </>
+	   );
 };
 
 export default FigureList;

@@ -1,0 +1,33 @@
+.footer {
+  width: 100vw;
+  max-width: 100%;
+  background: #222;
+  color: #fff;
+  padding: 8px 0 4px 0;
+  text-align: center;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  font-size: 1rem;
+  z-index: 100;
+}
+.footer-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+}
+.footer-info {
+  font-weight: 500;
+}
+.footer-copyright {
+  font-size: 0.95rem;
+}
+.footer-contact a {
+  color: #4fc3f7;
+  text-decoration: underline;
+}
+.footer-contact a:hover {
+  color: #81d4fa;
+}

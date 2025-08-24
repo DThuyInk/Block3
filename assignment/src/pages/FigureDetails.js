@@ -3,6 +3,7 @@ import { Container, Row, Col, Card, Button, Alert, Spinner } from 'react-bootstr
 import { useParams, useNavigate } from 'react-router-dom';
 import { useFigures } from '../contexts/FigureContext';
 import { useCart } from '../contexts/CartContext';
+import Footer from '../components/Footer';
 
 const FigureDetails = () => {
   const { id } = useParams();
@@ -160,6 +161,7 @@ const FigureDetails = () => {
           </Card>
         </Col>
       </Row>
+        <Footer />
     </Container>
   );
 };
