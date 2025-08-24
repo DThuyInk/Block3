@@ -1,0 +1,74 @@
+{
+  "Motorbikes": [
+    {
+      "id": "1",
+      "brand": "Honda",
+      "model": "Winner X",
+      "year": 2022,
+      "price": "$1500",
+      "image": "/img/winnerx.jpg",
+      "description": "A sporty underbone motorbike with aggressive design and powerful engine.",
+      "stock": 9
+    },
+    {
+      "id": "2",
+      "brand": "Yamaha",
+      "model": "Exciter 155",
+      "year": 2023,
+      "price": "$1700",
+      "image": "/img/exciter155.jpg",
+      "description": "A performance-focused motorbike suitable for daily use and racing enthusiasts.",
+      "stock": 7
+    },
+    {
+      "id": "3",
+      "brand": "Suzuki",
+      "model": "Raider R150",
+      "year": 2021,
+      "price": "$1400",
+      "image": "/img/raider.jpg",
+      "description": "A lightweight and agile motorbike ideal for city commuting.",
+      "stock": 11
+    },
+    {
+      "id": "4",
+      "brand": "Piaggio",
+      "model": "Liberty ABS",
+      "year": 2020,
+      "price": "$1800",
+      "image": "/img/liberty.jpg",
+      "description": "A premium scooter with stylish European design and ABS braking system.",
+      "stock": 4
+    }
+  ],
+  "UserAccounts": [
+    {
+      "id": "1",
+      "username": "admin",
+      "password": "admin123",
+      "account_type": "admin",
+      "status": "active"
+    },
+    {
+      "id": "2",
+      "username": "john",
+      "password": "johnpass",
+      "account_type": "user",
+      "status": "active"
+    },
+    {
+      "id": "3",
+      "username": "jane",
+      "password": "janepass",
+      "account_type": "user",
+      "status": "inactive"
+    },
+    {
+      "id": "4",
+      "username": "guest",
+      "password": "guestpass",
+      "account_type": "guest",
+      "status": "active"
+    }
+  ]
+}

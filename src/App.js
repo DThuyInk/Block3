@@ -1,24 +1,57 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { MotorbikeProvider } from "./contexts/MotorbikeContext";
+import { CartProvider } from "./contexts/CartContext";
+import Login from "./components/Login";
+import MotorbikeList from "./components/MotorbikeList";
+import MotorbikeDetails from "./components/MotorbikeDetails";
+import Cart from "./components/Cart";
+import Navigation from "./components/Navigation";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
+  const [user, setUser] = useState(() => {
+    // Get user from localStorage on initial load
+    const savedUser = localStorage.getItem('user');
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
+
+  // Save user to localStorage when user state changes
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem('user', JSON.stringify(user));
+    } else {
+      localStorage.removeItem('user');
+    }
+  }, [user]);
+
+  const handleLogout = () => {
+    setUser(null);
+  };
+
+  if (!user) {
+    return (
+      <Router>
+        <Login setUser={setUser} />
+      </Router>
+    );
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <MotorbikeProvider>
+      <CartProvider>
+        <Router>
+          <Navigation user={user} onLogout={handleLogout} />
+          <Routes>
+            <Route path="/" element={<Navigate to="/motorbikes" replace />} />
+            <Route path="/motorbikes" element={<MotorbikeList />} />
+            <Route path="/view/:id" element={<MotorbikeDetails />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="*" element={<Navigate to="/motorbikes" replace />} />
+          </Routes>
+        </Router>
+      </CartProvider>
+    </MotorbikeProvider>
   );
 }
 
