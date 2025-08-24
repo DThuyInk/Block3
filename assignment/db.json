@@ -1,0 +1,78 @@
+{
+  "Figures": [
+    {
+      "id": "1",
+      "name": "Oguri Cap",
+      "brand": "Phat! Company",
+      "type": "Figure",
+      "year": 2025,
+      "price": "6,450,000đ",
+      "image": "/img/oguri.jpg",
+      "description": "Uma Musume Cinderella Gray Oguri Cap 1/7 Complete Figure",
+      "stock": 9
+    },
+    {
+      "id": "2",
+      "name": "Lycaon",
+      "brand": "APEX",
+      "type": "Figure",
+      "year": 2026,
+      "price": "4,150,000đ",
+      "image": "/img/lycaon.jpg",
+      "description": "Zenless Zone Zero Von Lycaon 1/7 Complete Figure",
+      "stock": 7
+    },
+    {
+      "id": "3",
+      "name": "Hatsune Miku: Shuttered SEKAI Ver.",
+      "brand": "Good Smile Company",
+      "type": "Nendoroid",
+      "year": 2025,
+      "price": "1,690,000đ",
+      "image": "/img/miku.jpg",
+      "description": "Nendoroid Hatsune Miku: Shuttered SEKAI Ver.",
+      "stock": 11
+    },
+    {
+      "id": "4",
+      "name": "Deep Sea Visitor",
+      "brand": "miHoyo",
+      "type": "Keycap",
+      "year": 2025,
+      "price": "450,000₫",
+      "image": "/img/deepsea.jpg",
+      "description": "Zenless Zone Zero - Keycap - Zenless Zone Zero Engine Replica Series - Deep Sea Visitor (miHoYo)",
+      "stock": 15
+    }
+  ],
+  "UserAccounts": [
+    {
+      "id": "1",
+      "username": "admin",
+      "password": "admin123",
+      "account_type": "admin",
+      "status": "active"
+    },
+    {
+      "id": "2",
+      "username": "john",
+      "password": "johnpass",
+      "account_type": "user",
+      "status": "active"
+    },
+    {
+      "id": "3",
+      "username": "jane",
+      "password": "janepass",
+      "account_type": "user",
+      "status": "inactive"
+    },
+    {
+      "id": "4",
+      "username": "guest",
+      "password": "guestpass",
+      "account_type": "guest",
+      "status": "active"
+    }
+  ]
+}
