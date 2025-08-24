@@ -4,6 +4,7 @@ import { CartContext } from "../context/CartContext";
 import { useTheme } from "../context/ThemeContext";
 import { useFavourite } from "../context/FavouriteContext";
 import PropTypes from "prop-types";
+import Button from 'react-bootstrap/Button';
 
 // DishesList component renders the list of dishes and adds them to the cart
 const DishesList = ({ dishes, onGoToCart, onViewDetail }) => {
@@ -89,14 +90,14 @@ const DishesList = ({ dishes, onGoToCart, onViewDetail }) => {
                   <p className="card-text fw-bold">{`Giá: $${parseFloat(dish.price).toFixed(2)}`}</p>
                   <div className="d-flex gap-2 mt-auto">
                     {cartItems.find(item => item.id === dish.id) ? (
-                      <button className="btn btn-success" onClick={onGoToCart}>Giỏ hàng</button>
+                      <Button className="btn btn-success" onClick={onGoToCart}>Giỏ hàng</Button>
                     ) : (
-                      <button className="btn btn-primary" onClick={() => {
+                      <Button className="btn btn-primary" onClick={() => {
                         addToCart(dish);
                         showToast("Đã thêm vào giỏ hàng!");
-                      }}>Thêm vào giỏ</button>
+                      }}>Thêm vào giỏ</Button>
                     )}
-                    <button
+                    <Button
                       className={"btn " + (favourites.find(f => f.id === dish.id) ? "btn-warning" : "btn-outline-warning")}
                       onClick={() => {
                         toggleFavourite(dish);
@@ -104,7 +105,7 @@ const DishesList = ({ dishes, onGoToCart, onViewDetail }) => {
                       }}
                     >
                       {favourites.find(f => f.id === dish.id) ? "Bỏ ưa thích" : "Ưa thích"}
-                    </button>
+                    </Button>
                     <button className="btn btn-info" onClick={() => onViewDetail(dish)}>Xem chi tiết</button>
                   </div>
                 </div>

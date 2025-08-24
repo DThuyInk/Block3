@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { CartContext } from "../context/CartContext";
 import { useTheme } from "../context/ThemeContext";
+import Button from 'react-bootstrap/Button';
 
 const Cart = () => {
   const { cartItems, removeFromCart, clearCart, totalValue } = useContext(CartContext);
@@ -45,8 +46,8 @@ const Cart = () => {
               </ul>
               <p>{`Tổng số món: ${cartItems.length}`}</p>
               <p>{`Tổng giá trị: $${totalValue}`}</p>
-              <button className="btn btn-warning me-2" onClick={clearCart}>Xóa tất cả</button>
-              <button className="btn btn-success" onClick={handleCheckout}>Xác nhận đơn hàng</button>
+              <Button className="btn btn-warning me-2" onClick={clearCart}>Xóa tất cả</Button>
+              <Button className="btn btn-success" onClick={handleCheckout}>Xác nhận đơn hàng</Button>
             </>
           )}
         </div>

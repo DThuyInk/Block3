@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import '../styles.css';
-// import Button from 'react-bootstrap/Button';
+import Button from 'react-bootstrap/Button';
 
 const images = [
   {
@@ -45,8 +45,8 @@ const ImageCarousel = ({ autoPlay = true, interval = 3000 }) => {
           <h3 className="carousel-title">{images[current].title}</h3>
           <p className="carousel-desc">{images[current].desc}</p>
         </div>
-        <button className="carousel-arrow left" onClick={prevSlide}>&lt;</button>
-        <button className="carousel-arrow right" onClick={nextSlide}>&gt;</button>
+        <Button className="carousel-arrow left" onClick={prevSlide}>&lt;</Button>
+        <Button className="carousel-arrow right" onClick={nextSlide}>&gt;</Button>
       </div>
       <div className="carousel-dots">
         {images.map((_, idx) => (

@@ -1,5 +1,4 @@
 import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { CartProvider } from "./context/CartContext";
 import { ThemeProvider, useTheme } from "./context/ThemeContext";
 import { AuthProvider, useAuth } from "./context/AuthContext";

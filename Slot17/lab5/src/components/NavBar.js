@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { useTheme } from "../context/ThemeContext";
 import { CartContext } from "../context/CartContext";
+import Button from 'react-bootstrap/Button';
 
 function NavBar({ onFavourite, onLogout, onGoToCart }) {
   const { darkMode, setDarkMode } = useTheme();
@@ -27,7 +28,7 @@ function NavBar({ onFavourite, onLogout, onGoToCart }) {
             <li className="nav-item"><a className="nav-link" href="#home" style={{ background: 'none', color: '#b71c1c', fontWeight: 600, fontSize: '1.3rem' }}>Trang chủ</a></li>
             <li className="nav-item"><a className="nav-link" href="#menu" style={{ background: 'none', color: '#b71c1c', fontWeight: 600, fontSize: '1.3rem' }}>Thực đơn</a></li>
             <li className="nav-item">
-              <button
+              <Button
                 className={"nav-link btn btn-outline-primary px-3 py-1 d-flex align-items-center"}
                 style={{ borderRadius: 20, fontWeight: 500, background: 'none', border: 'none', boxShadow: 'none', gap: 6, olor: darkMode ? '#fff' : '#222', boxShadow: '0 2px 8px rgba(183,28,28,0.08)', fontSize: '1.3rem', transition: 'color 0.3s' }}
                 onClick={onGoToCart}
@@ -36,11 +37,11 @@ function NavBar({ onFavourite, onLogout, onGoToCart }) {
                 {cartCount > 0 && (
                   <span className="badge bg-danger" style={{fontSize: 12, borderRadius: '50%', minWidth: 20, minHeight: 20, lineHeight: '20px', display: 'inline-block', textAlign: 'center'}}>{cartCount}</span>
                 )}
-              </button>
+              </Button>
             </li>
           </ul>
           <div className="dropdown ms-3" style={{ position: 'relative', background: 'none' }}>
-            <button
+            <Button
               className="btn btn-secondary dropdown-toggle"
               type="button"
               onClick={() => setDropdownOpen((open) => !open)}
@@ -48,7 +49,7 @@ function NavBar({ onFavourite, onLogout, onGoToCart }) {
               style={{ background: 'none', olor: darkMode ? '#fff' : '#222', boxShadow: '0 2px 8px rgba(183,28,28,0.08)', fontWeight: 600, fontSize: '1.1rem', border: 'none', transition: 'color 0.3s' }}
             >
               Tài khoản
-            </button>
+            </Button>
             {dropdownOpen && (
               <ul className="dropdown-menu show" style={{ position: 'absolute', right: 0, background: 'none' , color: darkMode ? '#fff' : '#222', boxShadow: '0 2px 8px rgba(183,28,28,0.08)' }}>
                 <li>
@@ -60,12 +61,12 @@ function NavBar({ onFavourite, onLogout, onGoToCart }) {
               </ul>
             )}
           </div>
-          <button
+          <Button
               onClick={() => setDarkMode((prev) => !prev)}
               className={"btn ms-3 " + (darkMode ? "btn-info" : "btn-dark")}
             >
               {darkMode ? "Chuyển sang chế độ Sáng" : "Chuyển sang chế độ Tối"}
-          </button>
+          </Button>
         </div>
       </div>
     </nav>
