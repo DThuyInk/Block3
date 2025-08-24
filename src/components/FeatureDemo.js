@@ -11,7 +11,7 @@ const FeatureDemo = () => {
     {
       title: "2. JSON Server Configuration (0.5 marks)",
       status: "✅ Complete", 
-      description: "db.json configured with Motorbikes and UserAccounts data"
+      description: "db.json configured with Figures and UserAccounts data"
     },
     {
       title: "3. Login Form (3 marks)",
@@ -27,12 +27,12 @@ const FeatureDemo = () => {
       ]
     },
     {
-      title: "4. Motorbike Management (5 marks)",
+      title: "4. Figure Management (5 marks)",
       status: "✅ Complete",
       items: [
-        "React Router with /motorbikes, /view/:id, /cart routes (1 mark)",
-        "Motorbike list page with JSON Server data (1 mark)",
-        "View Details button and motorbike details page (0.5 mark)",
+        "React Router with /figures, /view/:id, /cart routes (1 mark)",
+        "Figure list page with JSON Server data (1 mark)",
+        "View Details button and figure details page (0.5 mark)",
         "404 Not Found page for invalid IDs",
         "Search by Model functionality (0.5 mark)",
         "Sort by Price functionality (0.5 mark)",

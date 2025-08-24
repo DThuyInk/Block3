@@ -10,18 +10,21 @@ const Navigation = ({ user, onLogout }) => {
   return (
     <Navbar bg="dark" variant="dark" expand="lg" sticky="top">
       <Container>
-        <Navbar.Brand href="/motorbikes">Motorbike Shop</Navbar.Brand>
+        <Navbar.Brand href="/figures">Figure Shop</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <LinkContainer to="/motorbikes">
-              <Nav.Link>Motorbikes</Nav.Link>
+            <LinkContainer to="/figures">
+              <Nav.Link>Figures</Nav.Link>
             </LinkContainer>
             <LinkContainer to="/cart">
               <Nav.Link>
                 Cart <Badge bg="secondary">{getTotalItems()}</Badge>
               </Nav.Link>
             </LinkContainer>
+              <LinkContainer to="/favourites">
+                <Nav.Link style={{ color: 'red' }}>Favourites</Nav.Link>
+              </LinkContainer>
           </Nav>
           <Nav>
             {user && (

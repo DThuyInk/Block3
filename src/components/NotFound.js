@@ -6,7 +6,7 @@ const NotFound = () => {
   const navigate = useNavigate();
 
   const handleGoHome = () => {
-    navigate('/motorbikes');
+    navigate('/figures');
   };
 
   return (
@@ -15,7 +15,7 @@ const NotFound = () => {
       <h2>Page Not Found</h2>
       <p className="lead">The page you are looking for does not exist.</p>
       <Button variant="primary" onClick={handleGoHome}>
-        Go to Motorbikes
+        Go to Figures
       </Button>
     </Container>
   );

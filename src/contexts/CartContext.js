@@ -56,8 +56,8 @@ const initialState = {
 export const CartProvider = ({ children }) => {
   const [state, dispatch] = useReducer(cartReducer, initialState);
 
-  const addToCart = (motorbike) => {
-    dispatch({ type: 'ADD_TO_CART', payload: motorbike });
+  const addToCart = (figure) => {
+    dispatch({ type: 'ADD_TO_CART', payload: figure });
   };
 
   const updateQuantity = (id, quantity) => {

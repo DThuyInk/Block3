@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { MotorbikeProvider } from "./contexts/MotorbikeContext";
+import { FigureProvider } from "./contexts/FigureContext";
 import { CartProvider } from "./contexts/CartContext";
-import Login from "./components/Login";
-import MotorbikeList from "./components/MotorbikeList";
-import MotorbikeDetails from "./components/MotorbikeDetails";
-import Cart from "./components/Cart";
+import Login from "./pages/Login";
+import FigureList from "./pages/FigureList";
+import FigureDetails from "./pages/FigureDetails";
+import Cart from "./pages/Cart";
+import Favourites from './pages/Favourites';
 import Navigation from "./components/Navigation";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -38,20 +39,21 @@ function App() {
   }
 
   return (
-    <MotorbikeProvider>
+    <FigureProvider>
       <CartProvider>
         <Router>
           <Navigation user={user} onLogout={handleLogout} />
           <Routes>
-            <Route path="/" element={<Navigate to="/motorbikes" replace />} />
-            <Route path="/motorbikes" element={<MotorbikeList />} />
-            <Route path="/view/:id" element={<MotorbikeDetails />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="*" element={<Navigate to="/motorbikes" replace />} />
+              <Route path="/" element={<Navigate to="/figures" replace />} />
+              <Route path="/figures" element={<FigureList />} />
+              <Route path="/view/:id" element={<FigureDetails />} />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/favourites" element={<Favourites />} />
+              <Route path="*" element={<Navigate to="/figures" replace />} />
           </Routes>
         </Router>
       </CartProvider>
-    </MotorbikeProvider>
+    </FigureProvider>
   );
 }
 
