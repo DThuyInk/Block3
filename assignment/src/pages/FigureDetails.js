@@ -1,33 +1,89 @@
 import React, { useState, useEffect } from 'react';
+import { FaFire } from 'react-icons/fa';
 import { Container, Row, Col, Card, Button, Alert, Spinner } from 'react-bootstrap';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useFigures } from '../contexts/FigureContext';
 import { useCart } from '../contexts/CartContext';
 import Footer from '../components/Footer';
-import Navigation from '../components/Navigation';
 import { useAuth } from '../contexts/AuthContext';
 
 const FigureDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { figures, loading, updateFigureStock, addFavourite, removeFavourite, favourites } = useFigures();
-  // ...existing code...
-  const handleAddFavourite = () => {
-    if (figure) {
-      addFavourite(figure);
+    const { figures, loading, updateFigureStock, addFavourite, removeFavourite, favourites } = useFigures();
+    const handleAddFavourite = () => {
+      if (!figure) return;
+      addFavourite(figure.id);
       setAlertMessage(`${figure.name} added to Favourites.`);
       setShowAlert(true);
       setTimeout(() => setShowAlert(false), 2000);
-    }
-  };
+    };
+  const handleAddToFavourites = async () => {
+
+  		if (!figure) return;
+
+      // Optimistic UI
+      handleAddFavourite();
+
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (!user) return;
+
+      const currentFavs = Array.isArray(user.favourites) ? user.favourites : [];
+      const updatedFavourites = currentFavs.includes(figure.id)
+        ? currentFavs
+        : [...currentFavs, figure.id];
+
+      try {
+        const res = await fetch(`http://localhost:3001/UserAccounts/${user.id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ favourites: updatedFavourites })
+        });
+        if (!res.ok) throw new Error("Failed to update server");
+
+        const updatedUser = await res.json();
+        localStorage.setItem('user', JSON.stringify(updatedUser));
+      } catch (err) {
+        console.error("Update favourites failed:", err);
+        // rollback nếu cần: removeFavourite(figure.id);
+      }
+	  };
+
   const handleRemoveFavourite = () => {
-    if (figure) {
-      removeFavourite(figure.id);
-      setAlertMessage(`${figure.name} removed from Favourites.`);
-      setShowAlert(true);
-      setTimeout(() => setShowAlert(false), 2000);
-    }
-  };
+  if (!figure) return;
+  removeFavourite(figure.id);
+  setAlertMessage(`${figure.name} removed from Favourites.`);
+  setShowAlert(true);
+  setTimeout(() => setShowAlert(false), 2000);
+};
+
+const handleRemoveFromFavourites = async () => {
+  if (!figure) return;
+
+  // Optimistic
+  handleRemoveFavourite();
+
+  const user = JSON.parse(localStorage.getItem('user'));
+  if (!user) return;
+
+  const currentFavs = Array.isArray(user.favourites) ? user.favourites : [];
+  const updatedFavourites = currentFavs.filter(id => id !== figure.id);
+
+  try {
+    const res = await fetch(`http://localhost:3001/UserAccounts/${user.id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ favourites: updatedFavourites })
+    });
+    if (!res.ok) throw new Error("Failed to update server");
+
+    const updatedUser = await res.json();
+    localStorage.setItem('user', JSON.stringify(updatedUser));
+  } catch (err) {
+    console.error("Update favourites failed:", err);
+    // rollback nếu cần: addFavourite(figure.id);
+  }
+};
   const { addToCart } = useCart();
 
   const [figure, setFigure] = useState(null);
@@ -63,41 +119,36 @@ const FigureDetails = () => {
     navigate('/figures');
   };
 
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
   if (loading) {
     return (
-      <>
-        <Navigation user={user} onLogout={logout} />
-        <Container className="d-flex justify-content-center align-items-center min-vh-100">
-          <Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
-        </Container>
-      </>
+      <Container className="d-flex justify-content-center align-items-center min-vh-100">
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      </Container>
     );
   }
 
   if (!figure) {
     return (
-      <>
-        <Navigation user={user} onLogout={logout} />
-        <Container className="py-4">
-          <div className="text-center">
-            <h1>404 - Figure Not Found</h1>
-            <p>The figure you are looking for does not exist.</p>
-            <Button variant="primary" onClick={handleBackToList}>
-              Back to Figure List
-            </Button>
-          </div>
-        </Container>
-      </>
+      <Container className="py-4">
+        <div className="text-center">
+          <h1>404 - Figure Not Found</h1>
+          <p>The figure you are looking for does not exist.</p>
+          <Button variant="primary" onClick={handleBackToList}>
+            Back to Figure List
+          </Button>
+        </div>
+      </Container>
     );
   }
 
-  const isFavourite = figure && favourites.some(f => f.id === figure.id);
+  const isFavourite = figure && favourites.includes(figure.id);
+  const isSale = figure.tags && figure.tags.includes('sale');
+  const isHot = figure.tags && figure.tags.includes('hot');
   return (
     <>
-      <Navigation user={user} onLogout={logout} />
       <Container className="py-4">
         <Button variant="secondary" className="mb-3" onClick={handleBackToList}>
           ← Back to List
@@ -111,22 +162,52 @@ const FigureDetails = () => {
 
         <Row>
           <Col lg={6}>
-            <Card>
-              <Card.Img 
-                variant="top" 
-                src={figure.image} 
-                style={{ height: '500px', objectFit: 'cover', objectPosition: 'top' }}
-                onError={(e) => {
-                  e.target.src = '/logo192.png'; // Fallback image
-                }}
-              />
-            </Card>
+            <div style={{ position: 'relative' }}>
+              {isHot && (
+                <span style={{
+                  position: 'absolute',
+                  top: 10,
+                  right: 10,
+                  zIndex: 2,
+                  background: 'red',
+                  color: 'white',
+                  borderRadius: '20px',
+                  padding: '4px 10px',
+                  fontWeight: 'bold',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '5px',
+                  fontSize: '1rem'
+                }}>
+                  <FaFire style={{ marginRight: 4 }} /> Hot
+                </span>
+              )}
+              <Card>
+                <Card.Img 
+                  variant="top" 
+                  src={figure.image} 
+                  style={{ height: '500px', objectFit: 'cover', objectPosition: 'top' }}
+                  onError={(e) => {
+                    e.target.src = '/logo192.png'; // Fallback image
+                  }}
+                />
+              </Card>
+            </div>
           </Col>
           <Col lg={6}>
             <Card>
               <Card.Body>
                 <Card.Title className="h2">{figure.brand} {figure.model}</Card.Title>
-                <Card.Text className="h4 text-primary mb-3">{figure.price}</Card.Text>
+                <Card.Text className="h4 mb-3">
+                  {isSale && figure.salePrice ? (
+                    <>
+                      <span style={{ textDecoration: 'line-through', color: '#888', marginRight: 8 }}>{figure.price}</span>{' '}
+                      <span style={{ color: 'red', fontWeight: 'bold' }}>{figure.salePrice}</span>
+                    </>
+                  ) : (
+                    <span>{figure.price}</span>
+                  )}
+                </Card.Text>
 
                 <div className="mb-3">
                   <p><strong>Name:</strong> {figure.name}</p>
@@ -153,19 +234,11 @@ const FigureDetails = () => {
                         {figure.stock === 0 ? 'Out of Stock' : 'Add to Cart'}
                       </Button>
                       {isFavourite ? (
-                        <Button
-                          variant="secondary"
-                          size="lg"
-                          onClick={handleRemoveFavourite}
-                        >
+                        <Button variant="secondary" size="lg" onClick={handleRemoveFromFavourites}>
                           Remove from Favourites
                         </Button>
                       ) : (
-                        <Button
-                          variant="danger"
-                          size="lg"
-                          onClick={handleAddFavourite}
-                        >
+                        <Button variant="danger" size="lg" onClick={handleAddToFavourites}>
                           Add to Favourites
                         </Button>
                       )}

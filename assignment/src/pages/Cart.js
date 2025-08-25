@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Row, Col, Table, Button, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { useCart } from '../contexts/CartContext';
+import { useCart, parseVNDPrice } from '../contexts/CartContext';
 import { useFigures } from '../contexts/FigureContext';
 import axios from 'axios';
 import Footer from '../components/Footer';
@@ -113,7 +113,14 @@ const Cart = () => {
                       </div>
                     </div>
                   </td>
-                  <td>${parseFloat(item.price.replace('$', '')).toFixed(2)}</td>
+                  <td>
+                    {(() => {
+                      // Hiển thị salePrice nếu có
+                      const priceStr = item.salePrice ? item.salePrice : item.price;
+                      const price = parseVNDPrice(priceStr);
+                      return price.toLocaleString('vi-VN') + '₫';
+                    })()}
+                  </td>
                   <td>
                     <Form.Control
                       type="number"
@@ -124,7 +131,11 @@ const Cart = () => {
                     />
                   </td>
                   <td>
-                    ${(parseFloat(item.price.replace('$', '')) * item.quantity).toFixed(2)}
+                    {(() => {
+                      const priceStr = item.salePrice ? item.salePrice : item.price;
+                      const price = parseVNDPrice(priceStr);
+                      return (price * item.quantity).toLocaleString('vi-VN') + '₫';
+                    })()}
                   </td>
                   <td>
                     <Button 
@@ -149,7 +160,7 @@ const Cart = () => {
               
               <div className="d-flex justify-content-between mb-2">
                 <span>Items ({cartItems.reduce((total, item) => total + item.quantity, 0)}):</span>
-                <span>${getTotalAmount().toFixed(2)}</span>
+                <span>{getTotalAmount().toLocaleString('vi-VN')}₫</span>
               </div>
               
               <div className="d-flex justify-content-between mb-2">
@@ -160,7 +171,7 @@ const Cart = () => {
               <hr />
               
               <div className="d-flex justify-content-between mb-3">
-                <strong>Total: ${getTotalAmount().toFixed(2)}</strong>
+                <strong>Total: {getTotalAmount().toLocaleString('vi-VN')}₫</strong>
               </div>
               
               <div className="d-grid">

@@ -53,6 +53,14 @@ const initialState = {
   items: []
 };
 
+// Chuyển đổi chuỗi giá tiền sang số (VND)
+export function parseVNDPrice(priceStr) {
+  if (!priceStr) return 0;
+  // Loại bỏ ký tự không phải số
+  let cleaned = priceStr.replace(/[^\d]/g, '');
+  return parseInt(cleaned, 10) || 0;
+}
+
 export const CartProvider = ({ children }) => {
   const [state, dispatch] = useReducer(cartReducer, initialState);
 
@@ -78,7 +86,9 @@ export const CartProvider = ({ children }) => {
 
   const getTotalAmount = () => {
     return state.items.reduce((total, item) => {
-      const price = parseFloat(item.price.replace('$', ''));
+      // Ưu tiên salePrice nếu có
+      const priceStr = item.salePrice ? item.salePrice : item.price;
+      const price = parseVNDPrice(priceStr);
       return total + (price * item.quantity);
     }, 0);
   };

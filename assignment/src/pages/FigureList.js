@@ -1,4 +1,5 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
+import { FaFire } from 'react-icons/fa';
 import Footer from '../components/Footer';
 import { Container, Row, Col, Card, Button, Form, Alert, Spinner } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
@@ -10,19 +11,89 @@ const FigureList = () => {
 	const navigate = useNavigate();
 	const { figures, loading, error, updateFigureStock, addFavourite, removeFavourite, favourites } = useFigures();
 	const { addToCart } = useCart();
+
 	const handleAddFavourite = (figure) => {
-		addFavourite(figure);
-		setAlertMessage(`${figure.name} added to Favourites.`);
-		setShowAlert(true);
-		setTimeout(() => setShowAlert(false), 2000);
+  		if (!figure) return;
+
+  		addFavourite(figure.id);
+  		setAlertMessage(`${figure.name} added to Favourites.`);
+  		setShowAlert(true);
+  		setTimeout(() => setShowAlert(false), 2000);
+		};
+
+	const handleAddToFavourites = async (figure) => {
+		// Update UI ngay (optimistic)
+  		handleAddFavourite(figure);
+
+  		const user = JSON.parse(localStorage.getItem('user'));
+  		if (!user) return;
+
+  		// Update UI ngay (optimistic)
+  		handleAddFavourite(figure);
+
+  		// Tránh trùng id
+  		const updatedFavourites = user.favourites.includes(figure.id)
+    		? user.favourites
+    		: [...user.favourites, figure.id];
+
+  		try {
+    		// PATCH lên db.json
+    		const res = await fetch(`http://localhost:3001/UserAccounts/${user.id}`, {
+      		method: 'PATCH',
+      		headers: { 'Content-Type': 'application/json' },
+      		body: JSON.stringify({ favourites: updatedFavourites })
+    		});
+
+    		if (!res.ok) throw new Error("Failed to update server");
+
+    		const updatedUser = await res.json();
+    		localStorage.setItem('user', JSON.stringify(updatedUser));
+ 		} catch (err) {
+    		console.error("Update favourites failed:", err);
+    		// rollback nếu cần (có thể xoá lại id vừa add nếu muốn strict)
+  		}
 	};
+
+
+	
 	const handleRemoveFavourite = (figure) => {
-		removeFavourite(figure.id);
-		setAlertMessage(`${figure.name} removed from Favourites.`);
-		setShowAlert(true);
-		setTimeout(() => setShowAlert(false), 2000);
+		if (figure) {
+			removeFavourite(figure.id);
+			setAlertMessage(`${figure.name} removed from Favourites.`);
+			setShowAlert(true);
+			setTimeout(() => setShowAlert(false), 2000);
+		}
 	};
-  
+	const handleRemoveFromFavourites = async (figure) => {
+		
+		handleRemoveFavourite(figure);
+
+		if (!figure) return;
+
+		const user = JSON.parse(localStorage.getItem('user'));
+		if (!user) return;
+
+		// Tránh trùng id
+		const updatedFavourites = user.favourites.filter(id => id !== figure.id);
+
+		try {
+			// PATCH lên db.json
+			const res = await fetch(`http://localhost:3001/UserAccounts/${user.id}`, {
+				method: 'PATCH',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ favourites: updatedFavourites })
+			});
+
+			if (!res.ok) throw new Error("Failed to update server");
+
+			const updatedUser = await res.json();
+			localStorage.setItem('user', JSON.stringify(updatedUser));
+		} catch (err) {
+			console.error("Update favourites failed:", err);
+			// rollback nếu cần (có thể xoá lại id vừa add nếu muốn strict)
+		}
+	};
+
 	const [searchTerm, setSearchTerm] = useState('');
 	const [sortOrder, setSortOrder] = useState('');
 	const [showAlert, setShowAlert] = useState(false);
@@ -70,6 +141,14 @@ const FigureList = () => {
 			setTimeout(() => setShowAlert(false), 3000);
 		}
 	};
+
+	useEffect(() => {
+		const user = JSON.parse(localStorage.getItem('user'));
+		if (user && user.favourites) {
+			// Cập nhật context favourites từ user
+			user.favourites.forEach(id => addFavourite(id));
+		}
+	},);
 
 	if (loading) {
 		return (
@@ -127,60 +206,97 @@ const FigureList = () => {
 					   </Col>
 				   </Row>
 				   <Row>
-					   {filteredAndSortedFigures.map(figure => (
-						   <Col key={figure.id} lg={3} md={6} className="mb-4">
-							   <Card>
-								   <Card.Img 
-									   variant="top" 
-									   src={figure.image} 
-									   style={{ height: '200px', objectFit: 'cover', objectPosition: 'top' }}
-									   onError={(e) => {
-										   e.target.src = '/logo192.png'; // Fallback image
-									   }} 
-								   />
-								   <Card.Body>
-									   <Card.Title>{figure.name} {figure.type}</Card.Title>
-									   <Card.Text>
-										   <strong>Brand:</strong> {figure.brand}<br />
-										   <strong>Price:</strong> {figure.price}<br />
-										   <strong>Stock:</strong> {figure.stock}
-									   </Card.Text>
-									   <div className="mt-auto">
-										   <div className="d-grid gap-2">
-											   <Button 
-												   variant="primary" 
-												   onClick={() => handleViewDetails(figure.id)}
-											   >
-												   View Details
-											   </Button>
-											   <Button 
-												   variant="success" 
-												   onClick={() => handleAddToCart(figure)}
-												   disabled={figure.stock === 0}
-											   >
-												   Add to Cart
-											   </Button>
-											   {favourites.includes(figure.id) ? (
-												   <Button
-													   variant="secondary"
-													   onClick={() => handleRemoveFavourite(figure)}
-												   >
-													   Remove from Favourites
-												   </Button>
-											   ) : (
-												   <Button
-													   variant="danger"
-													   onClick={() => handleAddFavourite(figure)}
-												   >
-													   Add to Favourites
-												   </Button>
-											   )}
-										   </div>
-									   </div>
-								   </Card.Body>
-							   </Card>
-						   </Col>
-					   ))}
+					   {filteredAndSortedFigures.map(figure => {
+						   const isSale = figure.tags && figure.tags.includes('sale');
+						   const isHot = figure.tags && figure.tags.includes('hot');
+						   return (
+							   <Col key={figure.id} lg={3} md={6} className="mb-4">
+								   <div style={{ position: 'relative' }}>
+									   {isHot && (
+										   <span style={{
+											   position: 'absolute',
+											   top: 10,
+											   right: 10,
+											   zIndex: 2,
+											   background: 'red',
+											   color: 'white',
+											   borderRadius: '20px',
+											   padding: '4px 10px',
+											   fontWeight: 'bold',
+											   display: 'flex',
+											   alignItems: 'center',
+											   gap: '5px',
+											   fontSize: '1rem'
+										   }}>
+											   <FaFire style={{ marginRight: 4 }} /> Hot
+										   </span>
+									   )}
+									   <Card>
+										   <Card.Img 
+											   variant="top" 
+											   src={figure.image} 
+											   style={{ height: '200px', objectFit: 'cover', objectPosition: 'top' }}
+											   onError={(e) => {
+												   e.target.src = '/logo192.png'; // Fallback image
+											   }} 
+										   />
+										   <Card.Body>
+											   <Card.Title>{figure.name} {figure.type}</Card.Title>
+											   <Card.Text>
+												   <strong>Brand:</strong> {figure.brand}<br />
+												   <strong>Price:</strong> {isSale && figure.salePrice ? (
+													   <>
+														   <span style={{ textDecoration: 'line-through', color: '#888', marginRight: 8 }}>{figure.price}</span>
+														   {' '}
+														   <span style={{ color: 'red', fontWeight: 'bold' }}>{figure.salePrice}</span>
+													   </>
+												   ) : (
+													   <span>{figure.price}</span>
+												   )}<br />
+												   <strong>Stock:</strong> {figure.stock}
+											   </Card.Text>
+											   <div className="mt-auto">
+												   <div className="d-grid gap-2">
+													   <Button 
+														   variant="primary" 
+														   onClick={() => handleViewDetails(figure.id)}
+													   >
+														   View Details
+													   </Button>
+													   <Button 
+														   variant="success" 
+														   onClick={() => handleAddToCart(figure)}
+														   disabled={figure.stock === 0}
+													   >
+														   Add to Cart
+													   </Button>
+													   {favourites.includes(figure.id) ? (
+														   <Button
+															   variant="secondary"
+															   onClick={() => 
+																handleRemoveFromFavourites(figure)
+															}
+														   >
+															   Remove from Favourites
+														   </Button>
+													   ) : (
+														   <Button
+															   variant="danger"
+															   onClick={() => 
+																   handleAddToFavourites(figure)
+															   }
+														   >
+															   Add to Favourites
+														   </Button>
+													   )}
+												   </div>
+											   </div>
+										   </Card.Body>
+									   </Card>
+								   </div>
+							   </Col>
+						   );
+					   })}
 				   </Row>
 				   {showAlert && <Alert variant="info" className="mt-3">{alertMessage}</Alert>}
 			   </Container>

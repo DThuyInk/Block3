@@ -12,32 +12,39 @@ const Navigation = ({ user, onLogout }) => {
       <Navbar bg="dark" variant="dark" expand="lg" sticky="top">
         <Container>
           <LinkContainer to="/figures">
-            <Navbar.Brand>Figure Shop</Navbar.Brand>
+            <Navbar.Brand>
+              <img
+                src="/logo.png"
+                alt="Logo"
+                width="30"
+                height="30"
+                className="d-inline-block align-top me-2"
+              />
+              Figure Shop
+            </Navbar.Brand>
           </LinkContainer>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            <LinkContainer to="/login">
-              <Nav.Link>Figures</Nav.Link>
-            </LinkContainer>
-            <LinkContainer to="/login">
-              <Nav.Link>
-                Cart
-              </Nav.Link>
-            </LinkContainer>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="me-auto">
+              <LinkContainer to="/login">
+                <Nav.Link>Figures</Nav.Link>
+              </LinkContainer>
+              <LinkContainer to="/login">
+                <Nav.Link>Cart</Nav.Link>
+              </LinkContainer>
               <LinkContainer to="/login">
                 <Nav.Link>Favourites</Nav.Link>
               </LinkContainer>
-          </Nav>
-          <Nav>
-            <LinkContainer to="/login" className="me-3">
-              <Nav.Link>Login</Nav.Link>
-            </LinkContainer>
-            <LinkContainer to="/register" className="me-3">
-              <Nav.Link>Register</Nav.Link>
-            </LinkContainer>
-          </Nav>
-        </Navbar.Collapse>
+            </Nav>
+            <Nav>
+              <LinkContainer to="/login" className="me-3">
+                <Nav.Link>Login</Nav.Link>
+              </LinkContainer>
+              <LinkContainer to="/register" className="me-3">
+                <Nav.Link>Register</Nav.Link>
+              </LinkContainer>
+            </Nav>
+          </Navbar.Collapse>
         </Container>
       </Navbar>
     );
@@ -47,7 +54,16 @@ const Navigation = ({ user, onLogout }) => {
     <Navbar bg="dark" variant="dark" expand="lg" sticky="top">
       <Container>
         <LinkContainer to="/figures">
-          <Navbar.Brand>Figure Shop</Navbar.Brand>
+          <Navbar.Brand>
+            <img
+              src="/logo.png"
+              alt="Logo"
+              width="30"
+              height="30"
+              className="d-inline-block align-top me-2"
+            />
+            Figure Shop
+          </Navbar.Brand>
         </LinkContainer>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -60,9 +76,9 @@ const Navigation = ({ user, onLogout }) => {
                 Cart <Badge bg="secondary">{getTotalItems()}</Badge>
               </Nav.Link>
             </LinkContainer>
-              <LinkContainer to="/favourites">
-                <Nav.Link style={{ color: 'red' }}>Favourites</Nav.Link>
-              </LinkContainer>
+            <LinkContainer to="/favourites">
+              <Nav.Link style={{ color: 'red' }}>Favourites</Nav.Link>
+            </LinkContainer>
           </Nav>
           <Nav>
             {user && (

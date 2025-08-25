@@ -14,7 +14,7 @@
       "salePrice": "5,800,000đ",
       "image": "/img/oguri.jpg",
       "description": "Uma Musume Cinderella Gray Oguri Cap 1/7 Complete Figure",
-      "stock": 9
+      "stock": 8
     },
     {
       "id": "2",
@@ -29,7 +29,7 @@
       "price": "4,150,000đ",
       "image": "/img/lycaon.jpg",
       "description": "Zenless Zone Zero Von Lycaon 1/7 Complete Figure",
-      "stock": 7
+      "stock": 6
     },
     {
       "id": "3",
@@ -44,7 +44,7 @@
       "salePrice": "1,490,000đ",
       "image": "/img/miku.jpg",
       "description": "Nendoroid Hatsune Miku: Shuttered SEKAI Ver.",
-      "stock": 11
+      "stock": 9
     },
     {
       "id": "4",
@@ -105,7 +105,7 @@
       "salePrice": "2,750,000₫",
       "image": "/img/mahiru.jpg",
       "description": "TENITOL TALL The Angel Next Door Spoils Me Rotten Mahiru Shiina Autumn ver. Complete Figure (FuRyu)",
-      "stock": 10
+      "stock": 9
     },
     {
       "id": "8",
@@ -192,7 +192,8 @@
       "account_type": "admin",
       "status": "active",
       "secret_question": "What is your favorite color?",
-      "answer": "blue"
+      "answer": "blue",
+      "favourites": []
     },
     {
       "id": "2",
@@ -202,7 +203,8 @@
       "account_type": "user",
       "status": "active",
       "secret_question": "What is your favorite food?",
-      "answer": "pizza"
+      "answer": "pizza",
+      "favourites": []
     },
     {
       "id": "3",
@@ -212,7 +214,8 @@
       "account_type": "user",
       "status": "inactive",
       "secret_question": "What is your favorite movie?",
-      "answer": "Inception"
+      "answer": "Inception",
+      "favourites": []
     },
     {
       "id": "4",
@@ -222,7 +225,8 @@
       "account_type": "user",
       "status": "active",
       "secret_question": "What is your favorite hobby?",
-      "answer": "reading"
+      "answer": "reading",
+      "favourites": []
     },
     {
       "id": "5",
@@ -233,7 +237,24 @@
       "secret_question": "What is your favorite color?",
       "answer": "red",
       "account_type": "user",
-      "status": "active"
+      "status": "active",
+      "favourites": []
+    },
+    {
+      "id": "6",
+      "username": "inuka",
+      "email": "inuka@gmail.com",
+      "password": "Inuka!@34",
+      "confirmPassword": "Inuka!@34",
+      "secret_question": "What is your favorite food?",
+      "answer": "Fried rice",
+      "account_type": "user",
+      "status": "active",
+      "favourites": [
+        "11",
+        "12",
+        "8"
+      ]
     }
   ]
 }

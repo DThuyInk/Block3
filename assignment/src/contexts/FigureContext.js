@@ -87,8 +87,8 @@ export const FigureProvider = ({ children }) => {
   }, []);
 
   // Thêm/xóa favourites
-  const addFavourite = (figure) => {
-    dispatch({ type: 'ADD_FAVOURITE', payload: figure.id });
+  const addFavourite = (id) => {
+    dispatch({ type: 'ADD_FAVOURITE', payload: id });
   };
   const removeFavourite = (id) => {
     dispatch({ type: 'REMOVE_FAVOURITE', payload: id });
