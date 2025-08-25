@@ -219,10 +219,21 @@
       "username": "guest",
       "email": "guest@example.com",
       "password": "guestpass",
-      "account_type": "guest",
+      "account_type": "user",
       "status": "active",
       "secret_question": "What is your favorite hobby?",
       "answer": "reading"
+    },
+    {
+      "id": "5",
+      "username": "thuy",
+      "email": "thuy@gmail.com",
+      "password": "!@Thuy34",
+      "confirmPassword": "!@Thuy34",
+      "secret_question": "What is your favorite color?",
+      "answer": "red",
+      "account_type": "user",
+      "status": "active"
     }
   ]
 }

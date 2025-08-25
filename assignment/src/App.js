@@ -8,6 +8,7 @@ import FigureDetails from "./pages/FigureDetails";
 import Cart from "./pages/Cart";
 import Favourites from './pages/Favourites';
 import LandingPage from './pages/LandingPage';
+import Register from './pages/Register';
 import Navigation from "./components/Navigation";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useAuth } from "./contexts/AuthContext";
@@ -25,6 +26,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="*" element={<LandingPage />} />
               <Route path="/view/:id" element={<FigureDetails />} />
+              <Route path="/register" element={<Register />} />
             </Routes>
           </Router>
         </CartProvider>
