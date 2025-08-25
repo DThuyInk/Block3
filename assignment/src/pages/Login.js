@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Container, Form, Button, Alert, Modal } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { useAuth } from '../contexts/AuthContext';
 import axios from 'axios';
 import Footer from '../components/Footer';
 
-const Login = ({ setUser }) => {
+const Login = () => {
+	const { login } = useAuth();
 	const navigate = useNavigate();
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
@@ -22,8 +23,8 @@ const Login = ({ setUser }) => {
       
 			const user = users.find(u => u.username === username && u.password === password);
       
-			if (user) {
-				setUser(user);
+					if (user) {
+						login(user);
 				setShowModal(true);
 				setShowAlert(false);
         
@@ -117,7 +118,7 @@ const Login = ({ setUser }) => {
 				  <Modal.Footer>
 					<Button variant="primary" onClick={() => {
 					  setShowModal(false);
-					  navigate('/motorbikes');
+					  navigate('/figures');
 					}}>
 					  OK
 					</Button>
@@ -129,8 +130,6 @@ const Login = ({ setUser }) => {
 	);
 };
 
-Login.propTypes = {
-	setUser: PropTypes.func.isRequired,
-};
+
 
 export default Login;

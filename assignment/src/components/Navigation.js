@@ -7,6 +7,40 @@ import PropTypes from 'prop-types';
 const Navigation = ({ user, onLogout }) => {
   const { getTotalItems } = useCart();
 
+  if (!user) {
+    return (
+      <Navbar bg="dark" variant="dark" expand="lg" sticky="top">
+        <Container>
+          <Navbar.Brand href="/figures">Figure Shop</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="me-auto">
+            <LinkContainer to="/login">
+              <Nav.Link>Figures</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/login">
+              <Nav.Link>
+                Cart
+              </Nav.Link>
+            </LinkContainer>
+              <LinkContainer to="/login">
+                <Nav.Link>Favourites</Nav.Link>
+              </LinkContainer>
+          </Nav>
+          <Nav>
+            <LinkContainer to="/login" className="me-3">
+              <Nav.Link>Login</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/register" className="me-3">
+              <Nav.Link>Register</Nav.Link>
+            </LinkContainer>
+          </Nav>
+        </Navbar.Collapse>
+        </Container>
+      </Navbar>
+    );
+  }
+
   return (
     <Navbar bg="dark" variant="dark" expand="lg" sticky="top">
       <Container>

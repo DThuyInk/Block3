@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { FigureProvider } from "./contexts/FigureContext";
 import { CartProvider } from "./contexts/CartContext";
@@ -7,34 +7,28 @@ import FigureList from "./pages/FigureList";
 import FigureDetails from "./pages/FigureDetails";
 import Cart from "./pages/Cart";
 import Favourites from './pages/Favourites';
+import LandingPage from './pages/LandingPage';
 import Navigation from "./components/Navigation";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useAuth } from "./contexts/AuthContext";
 
 function App() {
-  const [user, setUser] = useState(() => {
-    // Get user from localStorage on initial load
-    const savedUser = localStorage.getItem('user');
-    return savedUser ? JSON.parse(savedUser) : null;
-  });
-
-  // Save user to localStorage when user state changes
-  useEffect(() => {
-    if (user) {
-      localStorage.setItem('user', JSON.stringify(user));
-    } else {
-      localStorage.removeItem('user');
-    }
-  }, [user]);
-
-  const handleLogout = () => {
-    setUser(null);
-  };
-
+  const { user, logout } = useAuth();
+  
   if (!user) {
     return (
-      <Router>
-        <Login setUser={setUser} />
-      </Router>
+      <FigureProvider>
+        <CartProvider>
+          <Router>
+            <Routes>
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="*" element={<LandingPage />} />
+              <Route path="/view/:id" element={<FigureDetails />} />
+            </Routes>
+          </Router>
+        </CartProvider>
+      </FigureProvider>
     );
   }
 
@@ -42,7 +36,7 @@ function App() {
     <FigureProvider>
       <CartProvider>
         <Router>
-          <Navigation user={user} onLogout={handleLogout} />
+          <Navigation user={user} onLogout={logout} />
           <Routes>
               <Route path="/" element={<Navigate to="/figures" replace />} />
               <Route path="/figures" element={<FigureList />} />

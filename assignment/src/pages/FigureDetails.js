@@ -4,6 +4,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useFigures } from '../contexts/FigureContext';
 import { useCart } from '../contexts/CartContext';
 import Footer from '../components/Footer';
+import Navigation from '../components/Navigation';
+import { useAuth } from '../contexts/AuthContext';
 
 const FigureDetails = () => {
   const { id } = useParams();
@@ -61,108 +63,140 @@ const FigureDetails = () => {
     navigate('/figures');
   };
 
+  const { user, logout } = useAuth();
   if (loading) {
     return (
-      <Container className="d-flex justify-content-center align-items-center min-vh-100">
-        <Spinner animation="border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </Spinner>
-      </Container>
+      <>
+        <Navigation user={user} onLogout={logout} />
+        <Container className="d-flex justify-content-center align-items-center min-vh-100">
+          <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        </Container>
+      </>
     );
   }
 
   if (!figure) {
     return (
-      <Container className="py-4">
-        <div className="text-center">
-          <h1>404 - Figure Not Found</h1>
-          <p>The figure you are looking for does not exist.</p>
-          <Button variant="primary" onClick={handleBackToList}>
-            Back to Figure List
-          </Button>
-        </div>
-      </Container>
+      <>
+        <Navigation user={user} onLogout={logout} />
+        <Container className="py-4">
+          <div className="text-center">
+            <h1>404 - Figure Not Found</h1>
+            <p>The figure you are looking for does not exist.</p>
+            <Button variant="primary" onClick={handleBackToList}>
+              Back to Figure List
+            </Button>
+          </div>
+        </Container>
+      </>
     );
   }
 
   const isFavourite = figure && favourites.some(f => f.id === figure.id);
   return (
-    <Container className="py-4">
-      <Button variant="secondary" className="mb-3" onClick={handleBackToList}>
-        ← Back to List
-      </Button>
+    <>
+      <Navigation user={user} onLogout={logout} />
+      <Container className="py-4">
+        <Button variant="secondary" className="mb-3" onClick={handleBackToList}>
+          ← Back to List
+        </Button>
 
-      {showAlert && (
-        <Alert variant="success" className="mb-4">
-          {alertMessage}
-        </Alert>
-      )}
+        {showAlert && (
+          <Alert variant="success" className="mb-4">
+            {alertMessage}
+          </Alert>
+        )}
 
-      <Row>
-        <Col lg={6}>
-          <Card>
-            <Card.Img 
-              variant="top" 
-              src={figure.image} 
-              style={{ height: '500px', objectFit: 'cover', objectPosition: 'top' }}
-              onError={(e) => {
-                e.target.src = '/logo192.png'; // Fallback image
-              }}
-            />
-          </Card>
-        </Col>
-        <Col lg={6}>
-          <Card>
-            <Card.Body>
-              <Card.Title className="h2">{figure.brand} {figure.model}</Card.Title>
-              <Card.Text className="h4 text-primary mb-3">{figure.price}</Card.Text>
+        <Row>
+          <Col lg={6}>
+            <Card>
+              <Card.Img 
+                variant="top" 
+                src={figure.image} 
+                style={{ height: '500px', objectFit: 'cover', objectPosition: 'top' }}
+                onError={(e) => {
+                  e.target.src = '/logo192.png'; // Fallback image
+                }}
+              />
+            </Card>
+          </Col>
+          <Col lg={6}>
+            <Card>
+              <Card.Body>
+                <Card.Title className="h2">{figure.brand} {figure.model}</Card.Title>
+                <Card.Text className="h4 text-primary mb-3">{figure.price}</Card.Text>
 
-              <div className="mb-3">
-                <p><strong>Name:</strong> {figure.name}</p>
-                <p><strong>Year:</strong> {figure.year}</p>
-                <p><strong>Brand:</strong> {figure.brand}</p>
-                <p><strong>Type:</strong> {figure.type}</p>
-                <p><strong>Stock Available:</strong> {figure.stock}</p>
-              </div>
+                <div className="mb-3">
+                  <p><strong>Name:</strong> {figure.name}</p>
+                  <p><strong>Year:</strong> {figure.year}</p>
+                  <p><strong>Brand:</strong> {figure.brand}</p>
+                  <p><strong>Type:</strong> {figure.type}</p>
+                  <p><strong>Stock Available:</strong> {figure.stock}</p>
+                </div>
 
-              <div className="mb-4">
-                <h5>Description</h5>
-                <p>{figure.description}</p>
-              </div>
+                <div className="mb-4">
+                  <h5>Description</h5>
+                  <p>{figure.description}</p>
+                </div>
 
-              <div className="d-grid gap-2">
-                <Button 
-                  variant="success" 
-                  size="lg"
-                  onClick={handleAddToCart}
-                  disabled={figure.stock === 0}
-                >
-                  {figure.stock === 0 ? 'Out of Stock' : 'Add to Cart'}
-                </Button>
-                {isFavourite ? (
-                  <Button
-                    variant="secondary"
-                    size="lg"
-                    onClick={handleRemoveFavourite}
-                  >
-                    Remove from Favourites
-                  </Button>
-                ) : (
-                  <Button
-                    variant="danger"
-                    size="lg"
-                    onClick={handleAddFavourite}
-                  >
-                    Add to Favourites
-                  </Button>
-                )}
-              </div>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-        <Footer />
-    </Container>
+                <div className="d-grid gap-2">
+                  {user ? (
+                    <>
+                      <Button 
+                        variant="success" 
+                        size="lg"
+                        onClick={handleAddToCart}
+                        disabled={figure.stock === 0}
+                      >
+                        {figure.stock === 0 ? 'Out of Stock' : 'Add to Cart'}
+                      </Button>
+                      {isFavourite ? (
+                        <Button
+                          variant="secondary"
+                          size="lg"
+                          onClick={handleRemoveFavourite}
+                        >
+                          Remove from Favourites
+                        </Button>
+                      ) : (
+                        <Button
+                          variant="danger"
+                          size="lg"
+                          onClick={handleAddFavourite}
+                        >
+                          Add to Favourites
+                        </Button>
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      <Button 
+                        variant="success" 
+                        size="lg"
+                        onClick={() => navigate('/login')}
+                        disabled={figure.stock === 0}
+                      >
+                        {figure.stock === 0 ? 'Out of Stock' : 'Add to Cart'}
+                      </Button>
+                      <Button
+                        variant="danger"
+                        size="lg"
+                        onClick={() => navigate('/login')}
+                      >
+                        Add to Favourites
+                      </Button>
+                    </>
+                  )}
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+          <Footer />
+      </Container>
+    </>
   );
 };
 

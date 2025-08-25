@@ -6,7 +6,10 @@
       "brand": "Phat! Company",
       "type": "Figure",
       "year": 2025,
-      "tags": ["hot", "sale"],
+      "tags": [
+        "hot",
+        "sale"
+      ],
       "price": "6,450,000đ",
       "salePrice": "5,800,000đ",
       "image": "/img/oguri.jpg",
@@ -19,7 +22,10 @@
       "brand": "APEX",
       "type": "Figure",
       "year": 2026,
-      "tags": ["new","hot"],
+      "tags": [
+        "new",
+        "hot"
+      ],
       "price": "4,150,000đ",
       "image": "/img/lycaon.jpg",
       "description": "Zenless Zone Zero Von Lycaon 1/7 Complete Figure",
@@ -31,7 +37,9 @@
       "brand": "Good Smile Company",
       "type": "Nendoroid",
       "year": 2025,
-      "tags": ["sale"],
+      "tags": [
+        "sale"
+      ],
       "price": "1,690,000đ",
       "salePrice": "1,490,000đ",
       "image": "/img/miku.jpg",
@@ -44,7 +52,9 @@
       "brand": "miHoyo",
       "type": "Keycap",
       "year": 2025,
-      "tags": ["sale"],
+      "tags": [
+        "sale"
+      ],
       "price": "450,000₫",
       "salePrice": "400,000₫",
       "image": "/img/deepsea.jpg",
@@ -57,7 +67,10 @@
       "brand": "Good Smile Company",
       "type": "Figure",
       "year": 2026,
-      "tags": ["new", "hot"],
+      "tags": [
+        "new",
+        "hot"
+      ],
       "price": "1,790,000₫",
       "image": "/img/grace.jpg",
       "description": "Zenless Zone Zero - Grace Howard - Pop Up Parade - SP (Good Smile Company)",
@@ -69,7 +82,10 @@
       "brand": "Good Smile Company",
       "type": "Figure",
       "year": 2026,
-      "tags": ["new", "hot"],
+      "tags": [
+        "new",
+        "hot"
+      ],
       "price": "2,590,000₫",
       "image": "/img/albedo.jpg",
       "description": "Albedo - Pop Up Parade - Armor Ver., L (Good Smile Company)",
@@ -81,7 +97,10 @@
       "brand": "FuRyu",
       "type": "Figure",
       "year": 2024,
-      "tags": ["hot", "sale"],
+      "tags": [
+        "hot",
+        "sale"
+      ],
       "price": "3,050,000₫",
       "salePrice": "2,750,000₫",
       "image": "/img/mahiru.jpg",
@@ -94,7 +113,9 @@
       "brand": "Bandai Spirits",
       "type": "Figure",
       "year": 2024,
-      "tags": ["sale"],
+      "tags": [
+        "sale"
+      ],
       "price": "550,000₫",
       "salePrice": "500,000₫",
       "image": "/img/gamabunta.jpg",
@@ -107,7 +128,10 @@
       "brand": "Bellfine",
       "type": "Figure",
       "year": 2026,
-      "tags": ["hot", "new"],
+      "tags": [
+        "hot",
+        "new"
+      ],
       "price": "5,990,000₫",
       "image": "/img/kissshot.jpg",
       "description": "Kiss-Shot Acerola-Orion Heart-Under-Blade Kokorowatari Ver. 1/7 Complete Figure",
@@ -119,7 +143,9 @@
       "brand": "Myethos",
       "type": "Figure",
       "year": 2024,
-      "tags": ["sale"],
+      "tags": [
+        "sale"
+      ],
       "price": "1,190,000₫",
       "salePrice": "900,000₫",
       "image": "/img/tingyun.jpg",
@@ -132,7 +158,10 @@
       "brand": "SEGA",
       "type": "Figure",
       "year": 2023,
-      "tags": ["hot", "sale"],
+      "tags": [
+        "hot",
+        "sale"
+      ],
       "price": "690,000₫",
       "salePrice": "500,000₫",
       "image": "/img/denji.jpg",
@@ -145,7 +174,9 @@
       "brand": "Bandai Spirits",
       "type": "Figure",
       "year": 2023,
-      "tags": ["hot"],
+      "tags": [
+        "hot"
+      ],
       "price": "1,490,000₫",
       "image": "/img/gotou.jpg",
       "description": "Bocchi the Rock! - Gotou Hitori - Ichiban Kuji Volume 3 (A Prize) (Bandai Spirits)",
@@ -156,30 +187,42 @@
     {
       "id": "1",
       "username": "admin",
+      "email": "admin@example.com",
       "password": "admin123",
       "account_type": "admin",
-      "status": "active"
+      "status": "active",
+      "secret_question": "What is your favorite color?",
+      "answer": "blue"
     },
     {
       "id": "2",
       "username": "john",
+      "email": "john@example.com",
       "password": "johnpass",
       "account_type": "user",
-      "status": "active"
+      "status": "active",
+      "secret_question": "What is your favorite food?",
+      "answer": "pizza"
     },
     {
       "id": "3",
       "username": "jane",
+      "email": "jane@example.com",
       "password": "janepass",
       "account_type": "user",
-      "status": "inactive"
+      "status": "inactive",
+      "secret_question": "What is your favorite movie?",
+      "answer": "Inception"
     },
     {
       "id": "4",
       "username": "guest",
+      "email": "guest@example.com",
       "password": "guestpass",
       "account_type": "guest",
-      "status": "active"
+      "status": "active",
+      "secret_question": "What is your favorite hobby?",
+      "answer": "reading"
     }
   ]
 }
