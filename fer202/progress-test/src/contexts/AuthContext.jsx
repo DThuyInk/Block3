@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
 				acc => acc.email === email && acc.password === password && acc.isActive
 			);
 			if (found) {
-				setUser({ email: found.email });
+				setUser(found);
 				setLoading(false);
 				return { success: true };
 			} else {
