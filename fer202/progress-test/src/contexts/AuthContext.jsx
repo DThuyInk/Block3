@@ -10,8 +10,8 @@ export const AuthProvider = ({ children }) => {
 	const login = async (email, password) => {
 		setLoading(true);
 		try {
-			const res = await axios.get('/db.json');
-			const found = res.data.accounts.find(
+			const res = await axios.get('http://localhost:3001/accounts');
+			const found = res.data.find(
 				acc => acc.email === email && acc.password === password && acc.isActive
 			);
 			if (found) {

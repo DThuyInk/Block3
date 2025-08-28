@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import NavBar from '../components/NavBar';
+import Carousel from '../components/Carousel';
 import { Container, Row, Col, Form, InputGroup, Button, Card } from 'react-bootstrap';
 import { FaSearch, FaTimesCircle, FaFilter, FaSort } from 'react-icons/fa';
 import ProductCard from '../components/ProductCard';
@@ -29,25 +31,26 @@ export default function ProductsPage() {
   const filteredProducts = useProductFilters(products, searchQuery, sortBy, filterBy);
 
   return (
-    <Container className="py-4">
-      <h1 className="mb-4">Products</h1>
-
-      <Card className="mb-4">
-        <Card.Body>
-          <Row className="g-3">
-            <Col md={6}>
-              <InputGroup>
-                <InputGroup.Text><FaSearch /></InputGroup.Text>
-                <Form.Control
-                  placeholder="Search products..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
-                {searchQuery && (
-                  <Button variant="outline-secondary" onClick={() => setSearchQuery('')}>
-                    <FaTimesCircle />
-                  </Button>
-                )}
+    <>
+      <Carousel products={products} />
+      <Container className="py-4">
+        <h1 className="mb-4">Products</h1>
+        <Card className="mb-4">
+          <Card.Body>
+            <Row className="g-3">
+              <Col md={6}>
+                <InputGroup>
+                  <InputGroup.Text><FaSearch /></InputGroup.Text>
+                  <Form.Control
+                    placeholder="Search products..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                  {searchQuery && (
+                    <Button variant="outline-secondary" onClick={() => setSearchQuery('')}>
+                      <FaTimesCircle />
+                    </Button>
+                  )}
               </InputGroup>
             </Col>
             <Col md={3}>
@@ -87,6 +90,7 @@ export default function ProductsPage() {
       {filteredProducts.length === 0 && (
         <Row className="mt-4"><Col><Card className="text-center"><Card.Body>No mobile found.</Card.Body></Card></Col></Row>
       )}
-    </Container>
+      </Container>
+    </>
   );
 }

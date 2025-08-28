@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import { Button, Form, Alert, Card } from 'react-bootstrap';
@@ -8,6 +9,7 @@ const LoginPage = () => {
 	const navigate = useNavigate();
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+	const [showPassword, setShowPassword] = useState(false);
 	const [error, setError] = useState('');
 	const [fieldErrors, setFieldErrors] = useState({});
 
@@ -46,19 +48,35 @@ const LoginPage = () => {
 					</Form.Group>
 					<Form.Group className="mb-3" controlId="formPassword">
 						<Form.Label>Mật khẩu</Form.Label>
-						<Form.Control
-							type="password"
-							value={password}
-							onChange={e => setPassword(e.target.value)}
-							isInvalid={!!fieldErrors.password}
-							placeholder="Nhập mật khẩu"
-						/>
+						<div style={{ position: 'relative' }}>
+							<Form.Control
+								type={showPassword ? "text" : "password"}
+								value={password}
+								onChange={e => setPassword(e.target.value)}
+								isInvalid={!!fieldErrors.password}
+								placeholder="Nhập mật khẩu"
+							/>
+							<span
+								style={{ position: 'absolute', right: 12, top: '50%', transform: 'translateY(-50%)', cursor: 'pointer', color: '#888' }}
+								onClick={() => setShowPassword(s => !s)}
+							>
+								{showPassword ? <FaEyeSlash /> : <FaEye />}
+							</span>
+						</div>
 						{fieldErrors.password && <Form.Control.Feedback type="invalid">{fieldErrors.password}</Form.Control.Feedback>}
 					</Form.Group>
-					<Button type="submit" variant="primary" className="w-100" disabled={loading}>
-						Đăng nhập
-					</Button>
-					{error && <Alert variant="danger" className="mt-3">{error}</Alert>}
+								<Button type="submit" variant="primary" className="w-100 mb-2" disabled={loading}>
+									Đăng nhập
+								</Button>
+								<Button
+									type="button"
+									variant="outline-secondary"
+									className="w-100"
+									onClick={() => navigate('/register')}
+								>
+									Đăng ký
+								</Button>
+								{error && <Alert variant="danger" className="mt-3">{error}</Alert>}
 				</Form>
 			</Card>
 		</div>
