@@ -3,10 +3,12 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import { Button, Form, Alert, Card } from 'react-bootstrap';
+import { useToast } from '../contexts/ToastContext';
 
 const LoginPage = () => {
 	const { login, loading } = useAuth();
 	const navigate = useNavigate();
+	const toast = useToast();
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [showPassword, setShowPassword] = useState(false);
@@ -24,6 +26,7 @@ const LoginPage = () => {
 		const result = await login(email, password);
 		if (result.success) {
 			setError('');
+			toast('Đăng nhập thành công!', { type: 'success' });
 			navigate('/products');
 		} else {
 			setError(result.message);
@@ -65,18 +68,18 @@ const LoginPage = () => {
 						</div>
 						{fieldErrors.password && <Form.Control.Feedback type="invalid">{fieldErrors.password}</Form.Control.Feedback>}
 					</Form.Group>
-								<Button type="submit" variant="primary" className="w-100 mb-2" disabled={loading}>
-									Đăng nhập
-								</Button>
-								<Button
-									type="button"
-									variant="outline-secondary"
-									className="w-100"
-									onClick={() => navigate('/register')}
-								>
-									Đăng ký
-								</Button>
-								{error && <Alert variant="danger" className="mt-3">{error}</Alert>}
+					<Button type="submit" variant="primary" className="w-100 mb-2" disabled={loading}>
+						Đăng nhập
+					</Button>
+					<Button
+						type="button"
+						variant="outline-secondary"
+						className="w-100"
+						onClick={() => navigate('/register')}
+					>
+						Đăng ký
+					</Button>
+					{error && <Alert variant="danger" className="mt-3">{error}</Alert>}
 				</Form>
 			</Card>
 		</div>
